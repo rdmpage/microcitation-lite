@@ -1,2 +1,4 @@
-# microcitation-lite
-SQLIte database of publications
+# Microcitation-lite
+
+SQLite database of publications, based on earlier MySQL version.
+

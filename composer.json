@@ -1,0 +1,10 @@
+{
+    "name": "rpage/microcitation-lite",
+    "authors": [
+        {
+            "name": "Roderic Page",
+            "email": "rdmpage@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -1,0 +1,4 @@
+/vendor/
+microcitation.db-shm
+microcitation.db-wal
+.DS_Store
