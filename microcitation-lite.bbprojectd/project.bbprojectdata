@@ -4,7 +4,8 @@
 <dict>
 	<key>HierarchyData</key>
 	<array>
-		<string>FB55C997-679D-4812-8B63-2F79998F3B3C</string>
+		<string>C31272FB-401F-491E-9E6E-5F5377717C14</string>
+		<string>E678AFCA-CCEE-4E72-8247-E315286D20FE</string>
 		<string>D4126244-8F42-44DF-928B-D84FE15AFF4D</string>
 		<string>39397C3B-465A-4DA8-B7F1-57191C298D5C</string>
 		<string>91951AD0-D996-4BAB-B50E-4A3D7F2D570A</string>
@@ -110,6 +111,52 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>C31272FB-401F-491E-9E6E-5F5377717C14</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va+wCAAAAAAQQMAAAAHVL0FlO4KTCdPUEjbOWGv3n
+				/L8zVtUqK1pJ4I6BoKVj6AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAABIAAAABAQAAbWljcm9jaXRhdGlv
+				bi1saXRlAAAKAAAAAQEAAC5naXRpZ25vcmUAABQAAAAB
+				BgAAEAAAACAAAAAwAAAAQAAAAFwAAAAIAAAABAMAAIRc
+				AAAAAAAACAAAAAQDAACWxgMAAAAAAAgAAAAEAwAAQOge
+				AAAAAAAIAAAABAMAAL0fvwAAAAAACAAAAAQDAAAcIL8A
+				AAAAABQAAAABBgAAjAAAAJwAAACsAAAAvAAAAMwAAAAI
+				AAAAAAQAAEHES+M+b8FzGAAAAAECAAABAAAAAAAAAA8A
+				AAAAAAAAAAAAAAAAAAAIAAAABAMAAAMAAAAAAAAABAAA
+				AAMDAAD1AQAACAAAAAEJAABmaWxlOi8vLwwAAAABAQAA
+				TWFjaW50b3NoIEhECAAAAAQDAAAAkIKW5wAAAAgAAAAA
+				BAAAQcQU38QAAAAkAAAAAQEAAEVFREJDNDk1LURGNTIt
+				NDU2QS1CNDMxLUZCNjA3QkYwNEFEMRgAAAABAgAAgQAA
+				AAEAAADvEwAAAQAAAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+				AAAAAAEFAADMAAAA/v///wEAAAAAAAAAEAAAAAQQAABw
+				AAAAAAAAAAUQAADcAAAAAAAAABAQAAAIAQAAAAAAAEAQ
+				AAD4AAAAAAAAAAIgAADUAQAAAAAAAAUgAABEAQAAAAAA
+				ABAgAABUAQAAAAAAABEgAACIAQAAAAAAABIgAABoAQAA
+				AAAAABMgAAB4AQAAAAAAACAgAAC0AQAAAAAAADAgAADg
+				AQAAAAAAAAHAAAAoAQAAAAAAABHAAAAgAAAAAAAAABLA
+				AAA4AQAAAAAAABDQAAAEAAAAAAAAAA==
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/microcitation-lite/.gitignore</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./.gitignore</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>.gitignore</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+		</dict>
 		<key>D4126244-8F42-44DF-928B-D84FE15AFF4D</key>
 		<dict>
 			<key>ItemData</key>
@@ -210,7 +257,7 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
-		<key>FB55C997-679D-4812-8B63-2F79998F3B3C</key>
+		<key>E678AFCA-CCEE-4E72-8247-E315286D20FE</key>
 		<dict>
 			<key>ItemData</key>
 			<dict>

@@ -650,8 +650,11 @@ function csl_to_sql($csl)
 	}
 	
 	// store object itself as JSON
+	$json = json_encode($csl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+	$json = str_replace("'", "''", $json);
+
 	$keys[] = 'json';
-	$values[] = "'" . addcslashes(json_encode($csl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), "'") . "'" ;
+	$values[] = "'" . $json . "'" ;
 	
 	$sql = 'REPLACE INTO publications(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
 
