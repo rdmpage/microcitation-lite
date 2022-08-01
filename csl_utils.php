@@ -153,8 +153,6 @@ function csl_to_ris($csl)
 	return $ris;
 }
 
-
-
 //----------------------------------------------------------------------------------------
 // Convert a simple CSL object to OpenURL query
 function csl_to_openurl($csl)
@@ -300,7 +298,6 @@ function csl_to_openurl($csl)
 	$openurl = join('&', $kv);
 
 	return $openurl;
-
 }
 
 //----------------------------------------------------------------------------------------
@@ -408,9 +405,7 @@ function csl_to_tsv($csl)
 				
 			default:
 				break;
-		}
-
-	
+		}	
 	}
 	
 	
@@ -430,9 +425,7 @@ function csl_to_tsv($csl)
 	$tsv_string = join("\t", $row);
 
 	return $tsv_string;
-
 }
-
 
 //----------------------------------------------------------------------------------------
 // Convert a simple CSL object to SQL
@@ -468,6 +461,7 @@ function csl_to_sql($csl)
 	{
 		switch ($k)
 		{
+		
 			case 'DOI':
 				$keys[] ='doi';
 				$values[] = '"' . $v . '"';	
@@ -648,12 +642,16 @@ function csl_to_sql($csl)
 					
 				}					
 				break;
-
 				
+							
 			default:
 				break;
 		}
 	}
+	
+	// store object itself as JSON
+	$keys[] = 'json';
+	$values[] = "'" . addcslashes(json_encode($csl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), "'") . "'" ;
 	
 	$sql = 'REPLACE INTO publications(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
 
@@ -670,7 +668,6 @@ function csl_to_sql($csl)
 	*/
 	
 	return $sql;
-
 }
 
 //----------------------------------------------------------------------------------------
@@ -717,7 +714,6 @@ if (0)
 	$sql = csl_to_sql($obj);
     
     echo $sql . "\n";    
-
 
 }
 
