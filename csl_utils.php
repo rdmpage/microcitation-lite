@@ -29,6 +29,7 @@ function csl_to_ris($csl)
 		
 		'URL'				=> 'UR',
 		'DOI'				=> 'DO',
+		'pdf'				=> 'L1',
 
 		'publisher'			=> 'PB',
 		'publisher-place'	=> 'PP',
@@ -67,6 +68,7 @@ function csl_to_ris($csl)
 			case 'volume':
 			case 'issue':
 			case 'DOI':
+			case 'URL':
 			case 'publisher':
 			case 'publisher-place':
 				$ris_values[$csl_ris_map[$k]][] = $v;				
@@ -122,6 +124,19 @@ function csl_to_ris($csl)
 						{
 							$ris_values[$csl_ris_map[$k]][] = $name;
 						}
+					}
+				}
+				break;
+				
+			case 'link':
+				$have_pdf = false;				
+				foreach ($v as $link)
+				{
+					//print_r($link);
+					if (($link->{'content-type'} == 'application/pdf') && !$have_pdf)
+					{
+						$ris_values[$csl_ris_map['pdf']][] = $link->URL;
+						$have_pdf = true;
 					}
 				}
 				break;
@@ -429,7 +444,7 @@ function csl_to_tsv($csl)
 
 //----------------------------------------------------------------------------------------
 // Convert a simple CSL object to SQL
-function csl_to_sql($csl)
+function csl_to_sql($csl, $table = "publications")
 {
 	$keys = array();
 	$values = array();
@@ -443,6 +458,14 @@ function csl_to_sql($csl)
 			$guid = $csl->DOI;
 		}
 	}
+	
+	if ($guid == '')
+	{
+		if (isset($csl->URL))
+		{
+			$guid = $csl->URL;
+		}
+	}	
 	
 	if ($guid == '')
 	{
@@ -656,7 +679,7 @@ function csl_to_sql($csl)
 	$keys[] = 'json';
 	$values[] = "'" . $json . "'" ;
 	
-	$sql = 'REPLACE INTO publications(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
+	$sql = 'REPLACE INTO ' . $table . '(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
 
 	/*	
 	$n = count($multilingual_keys);
