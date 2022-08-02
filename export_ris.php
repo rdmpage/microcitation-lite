@@ -42,6 +42,7 @@ function do_query($sql)
 // get CSL
 
 $sql = 'SELECT * FROM publications WHERE guid="http://db.koreascholar.com/article?code=371999"';
+$sql = 'SELECT * FROM publications WHERE journal="Insecta Koreana"';
 
 $data = do_query($sql);
 
@@ -107,9 +108,9 @@ foreach ($data as $obj)
 		}
 	}
 	
-	print_r($csl);
+	//print_r($csl);
 	
-	echo csl_to_ris($csl);
+	echo csl_to_ris($csl) . "\n\n";
 }
 
 ?>
