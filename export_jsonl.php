@@ -50,7 +50,32 @@ foreach ($data as $obj)
 	// print_r($csl);
 
 	// enhance 
+	
+	// id
+	if (!isset($csl->id))
+	{
+		$csl->id = $obj->guid;
+	}
 
+	// ISSN
+	if (!isset($csl->ISSN) && (isset($obj->issn) || isset($obj->eissn)))
+	{
+		if (!isset($csl->ISSN))
+		{
+			$csl->ISSN = array();
+		}
+		
+		if (isset($obj->issn))
+		{
+			$csl->ISSN[] = $obj->issn;
+		}
+
+		if (isset($obj->eissn))
+		{
+			$csl->ISSN[] = $obj->eissn;
+		}
+	}
+	
 	// PDF?
 	if (isset($obj->pdf))
 	{
