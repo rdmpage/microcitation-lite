@@ -469,6 +469,21 @@ function csl_to_sql($csl, $table = "publications")
 	
 	if ($guid == '')
 	{
+		if (isset($csl->link))
+		{
+			foreach ($csl->link as $link)
+			{
+				if (isset($link->{'content-type'}) && ($link->{'content-type'} == "application/pdf"))
+				{
+					$guid = $link->URL;
+				}
+			}
+		}
+	}	
+	
+	
+	if ($guid == '')
+	{
 		$guid = uniqid();
 	}
 
@@ -483,10 +498,14 @@ function csl_to_sql($csl, $table = "publications")
 	foreach ($csl as $k => $v)
 	{
 		switch ($k)
-		{
-		
+		{		
 			case 'DOI':
 				$keys[] ='doi';
+				$values[] = '"' . $v . '"';	
+				break;		
+
+			case 'URL':
+				$keys[] ='url';
 				$values[] = '"' . $v . '"';	
 				break;		
 				
@@ -507,12 +526,12 @@ function csl_to_sql($csl, $table = "publications")
 				if (is_array($v) && count($v) > 0)
 				{
 					$keys[] = 'journal';
-					$values[] = '"' . addcslashes($v[0], '"') . '"';					
+					$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
 				}
 				else 
 				{
 					$keys[] = 'journal';
-					$values[] = '"' . addcslashes($v, '"') . '"';					
+					$values[] = '"' . str_replace('"', '""', $v) . '"';					
 				}
 				break;
 
@@ -520,12 +539,13 @@ function csl_to_sql($csl, $table = "publications")
 				if (is_array($v) && count($v) > 0)
 				{
 					$keys[] = 'title';
-					$values[] = '"' . addcslashes($v[0], '"') . '"';					
+					$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
 				}
+								
 				else 
 				{
 					$keys[] = 'title';
-					$values[] = '"' . addcslashes($v, '"') . '"';	
+					$values[] = '"' . str_replace('"', '""', $v) . '"';	
 					
 					/*
 					$language = 'en';
@@ -557,12 +577,12 @@ function csl_to_sql($csl, $table = "publications")
 				if (is_array($v))
 				{
 					$keys[] = 'issn';
-					$values[] = '"' . addcslashes($v[0], '"') . '"';					
+					$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
 				}
 				else 
 				{
 					$keys[] = 'issn';
-					$values[] = '"' . addcslashes($v, '"') . '"';					
+					$values[] = '"' . str_replace('"', '""', $v) . '"';					
 				}
 				break;
 	
