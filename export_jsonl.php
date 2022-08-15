@@ -2,6 +2,7 @@
 
 $pdo = new PDO('sqlite:microcitation.db');
 
+require_once (dirname(__FILE__) . '/db_to_csl.php');
 
 //----------------------------------------------------------------------------------------
 function do_query($sql)
@@ -41,68 +42,21 @@ function do_query($sql)
 $sql = 'SELECT * FROM publications WHERE guid="http://db.koreascholar.com/article?code=371999"';
 $sql = 'SELECT * FROM publications WHERE journal="Insecta Koreana"';
 
+$sql = 'SELECT * FROM publications_doi WHERE `publications_doi`.doi LIKE "10.5635/ASED%"';
+
+$sql = 'SELECT * FROM publications where guid="10.5635/ASED.2018.34.1.050"';
+
+$sql = 'SELECT * FROM publications_doi WHERE `publications_doi`.doi LIKE "10.5635/KJSZ%"';
+$sql = 'SELECT * FROM publications WHERE `publications`.guid LIKE "http://koreascience.or.kr/article/%"';
+
+$sql = 'SELECT * FROM publications WHERE `publications`.issn="1123-6787"';
+$sql = 'SELECT * FROM publications WHERE `publications`.journal="Holarctic Lepidoptera"';
+
 $data = do_query($sql);
 
 foreach ($data as $obj)
 {
-	$csl = json_decode($obj->json);
-
-	// print_r($csl);
-
-	// enhance 
-	
-	// id
-	if (!isset($csl->id))
-	{
-		$csl->id = $obj->guid;
-	}
-
-	// ISSN
-	if (!isset($csl->ISSN) && (isset($obj->issn) || isset($obj->eissn)))
-	{
-		if (!isset($csl->ISSN))
-		{
-			$csl->ISSN = array();
-		}
-		
-		if (isset($obj->issn))
-		{
-			$csl->ISSN[] = $obj->issn;
-		}
-
-		if (isset($obj->eissn))
-		{
-			$csl->ISSN[] = $obj->eissn;
-		}
-	}
-	
-	// PDF?
-	if (isset($obj->pdf))
-	{
-		$add = true;
-		if (!isset($csl->link))
-		{
-			$csl->link = array();	
-		}
-		else
-		{
-			foreach ($csl->link as $link)
-			{
-				if ($link->URL == $obj->pdf)
-				{
-					$add = false;
-				}
-			}
-		}	
-		if ($add)
-		{
-			$link = new stdclass;
-			$link->URL = $obj->pdf;
-			$link->{'content-type'} = "application/pdf";
-			
-			$csl->link[] = $link;
-		}
-	}
+	$csl = data_to_csl($obj);
 
 	// Multiple languages?
 	$sql = 'SELECT * FROM `multilingual` WHERE guid="' . $obj->guid . '"';
@@ -130,7 +84,7 @@ foreach ($data as $obj)
 		}
 	}
 	
-	// print_r($csl);
+	//print_r($csl);
 	
 	echo json_encode($csl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
 }
