@@ -3,6 +3,7 @@
 // Export to RIS
 
 require_once (dirname(__FILE__) . '/csl_utils.php');
+require_once (dirname(__FILE__) . '/db_to_csl.php');
 
 $pdo = new PDO('sqlite:microcitation.db');
 
@@ -43,44 +44,26 @@ function do_query($sql)
 
 $sql = 'SELECT * FROM publications WHERE guid="http://db.koreascholar.com/article?code=371999"';
 $sql = 'SELECT * FROM publications WHERE journal="Insecta Koreana"';
+$sql = 'SELECT * FROM publications WHERE `publications`.doi LIKE "10.5635/ASED%"';
+
+$sql = 'SELECT * FROM publications WHERE `publications`.doi LIKE "10.5635/KJSZ%"';
+
+$sql = 'SELECT * FROM publications WHERE `publications`.guid LIKE "http://koreascience.or.kr/article/%"';
+
+$sql = 'SELECT * FROM publications_doi WHERE issn="1945-9475" AND authors IS NOT NULL AND volume="7" ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE issn="1123-6787" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE `publications`.journal="Holarctic Lepidoptera" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
 
 $data = do_query($sql);
 
 foreach ($data as $obj)
 {
-	$csl = json_decode($obj->json);
-
-	// print_r($csl);
-
-	// enhance 
-
-	// PDF?
-	if (isset($obj->pdf))
-	{
-		$add = true;
-		if (!isset($csl->link))
-		{
-			$csl->link = array();	
-		}
-		else
-		{
-			foreach ($csl->link as $link)
-			{
-				if ($link->URL == $obj->pdf)
-				{
-					$add = false;
-				}
-			}
-		}	
-		if ($add)
-		{
-			$link = new stdclass;
-			$link->URL = $obj->pdf;
-			$link->{'content-type'} = "application/pdf";
-			
-			$csl->link[] = $link;
-		}
-	}
+	$csl = data_to_csl($obj);
+	
+	//print_r($csl);
 
 	// Multiple languages?
 	$sql = 'SELECT * FROM `multilingual` WHERE guid="' . $obj->guid . '"';
