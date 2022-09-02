@@ -46,14 +46,21 @@ function data_to_csl($obj)
 				$csl->{'container-title'} = $v;
 				break;
 				
-			case 'authors':
-				$csl->author = array();
-				$parts = explode(';', $v);
-				foreach ($parts as $name)
+			case 'authors':			
+				if (isset($obj->authors_structured))
 				{
-					$author = new stdclass;
-					$author->literal = $name;
-					$csl->author[] = $author;
+					$csl->author = json_decode($obj->authors_structured);
+				}
+				else
+				{			
+					$csl->author = array();
+					$parts = explode(';', $v);
+					foreach ($parts as $name)
+					{
+						$author = new stdclass;
+						$author->literal = $name;
+						$csl->author[] = $author;
+					}
 				}				
 				break;
 				
