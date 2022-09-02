@@ -518,8 +518,9 @@ function csl_to_sql($csl, $table = "publications")
 			case 'volume':
 			case 'issue':
 			case 'publisher':
+			case 'abstract':
 				$keys[] = $k;
-				$values[] = '"' . $v . '"';	
+				$values[] = '"' . str_replace('"', '""', $v) . '"';	
 				break;	
 	
 			case 'container-title':
@@ -645,7 +646,12 @@ function csl_to_sql($csl, $table = "publications")
 				{
 					if (isset($author->family))
 					{
-						$authors[] = $author->given . ' ' . $author->family;
+						$name = $author->family;
+						if (isset($author->given))
+						{
+							$name = $author->given . ' ' . $name;
+						}					
+						$authors[] = $name;
 					}
 					else
 					{
