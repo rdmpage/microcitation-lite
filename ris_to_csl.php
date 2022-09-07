@@ -191,6 +191,7 @@ function process_ris_key($key, $value, &$obj)
 			$obj->title = $value;
 			break;
 				
+		/*
 		// Handle cases where both pages SP and EP are in this field
 		case 'SP':
 			if (preg_match('/^(?<spage>[0-9]+)\s*[-|–|—]\s*(?<epage>[0-9]+)$/u', trim($value), $matches))
@@ -215,6 +216,17 @@ function process_ris_key($key, $value, &$obj)
 			{
 				$obj->page 				.= '-' . $value;
 			}							
+			break;
+		*/
+		
+		// Keep it simple
+		case 'SP':
+			$obj->page 				= $value;
+			$obj->{'page-first'} 	= $value;
+			break;
+
+		case 'EP':
+			$obj->page 				.= '-' . $value;
 			break;
 			
 		case 'PY': // used by Ingenta, and others
