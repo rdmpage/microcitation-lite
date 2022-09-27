@@ -104,6 +104,10 @@ function data_to_csl($obj)
 				$csl->DOI = $v;
 				break;
 
+			case 'handle':
+				$csl->HANDLE = $v;
+				break;
+
 			case 'url':
 				$csl->URL = $v;
 				break;

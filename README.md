@@ -78,5 +78,33 @@ SELECT wikidata, "P953", """" || pdf || """",  "P2701", "Q42332", "P1065", """" 
 SELECT wikidata, "P724", """" || internetarchive || """" FROM publications WHERE doi LIKE "10.5635/ASED%" AND wikidata IS NOT NULL AND internetarchive IS NOT NULL;
 ```
 
+### Add multilingual titles and labels
+
+#### Titles
+
+```
+SELECT wikidata, "P1476", language || ":" || """" || value || """", "S248", "Q4698727", "S854", """" || guid || """"
+FROM publications 
+INNER JOIN multilingual USING(guid) 
+WHERE issn='1021-5506'
+AND year < 2013
+AND multilingual.`language` = 'zh'
+AND multilingual.`key` = 'title'
+AND wikidata IS NOT NULL;
+```
+
+#### Labels
+
+```
+SELECT wikidata, "L" || language, """" || value || """"
+FROM publications 
+INNER JOIN multilingual USING(guid) 
+WHERE issn='1021-5506'
+AND year < 2013
+AND multilingual.`language` = 'zh'
+AND multilingual.`key` = 'title'
+AND wikidata IS NOT NULL;
+```
+
 
 
