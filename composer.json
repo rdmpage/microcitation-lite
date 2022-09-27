@@ -6,5 +6,7 @@
             "email": "rdmpage@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "renanbr/bibtex-parser": "^2.1"
+    }
 }
