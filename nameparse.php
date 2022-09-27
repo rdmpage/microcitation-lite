@@ -115,12 +115,12 @@ function	parse_name($fullname) {
 					continue;
 					}
 
-				if($out['last']) {
+				if(isset($out['last'])) {
 					$out['last']	.=	" $curr";
 					continue;
 					}
 
-				if($out['middle']) {
+				if(isset($out['middle'])) {
 					$out['middle']		.=	" $curr";
 					}
 				else {

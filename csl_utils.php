@@ -504,6 +504,11 @@ function csl_to_sql($csl, $table = "publications")
 				$values[] = '"' . $v . '"';	
 				break;		
 
+			case 'HANDLE':
+				$keys[] ='handle';
+				$values[] = '"' . $v . '"';	
+				break;		
+
 			case 'URL':
 				$keys[] ='url';
 				$values[] = '"' . $v . '"';	
@@ -537,12 +542,14 @@ function csl_to_sql($csl, $table = "publications")
 				break;
 
 			case 'title':
-				if (is_array($v) && count($v) > 0)
+				if (is_array($v))
 				{
-					$keys[] = 'title';
-					$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
-				}
-								
+					if (count($v) > 0)
+					{
+						$keys[] = 'title';
+						$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
+					}
+				}								
 				else 
 				{
 					$keys[] = 'title';
