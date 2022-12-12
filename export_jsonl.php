@@ -51,6 +51,28 @@ $sql = 'SELECT * FROM publications WHERE `publications`.guid LIKE "http://koreas
 
 $sql = 'SELECT * FROM publications WHERE `publications`.issn="1123-6787"';
 $sql = 'SELECT * FROM publications WHERE `publications`.journal="Holarctic Lepidoptera"';
+$sql = 'SELECT * FROM publications WHERE `publications`.issn="1008-0384"';
+
+$sql = 'SELECT * FROM publications WHERE `publications`.issn="1028-6764"';
+//$sql = 'SELECT * FROM publications WHERE guid = "https://www.zobodat.at/publikation_articles.php?id=489883"';
+
+$sql = 'SELECT * FROM publications WHERE `publications`.issn="1021-5506" AND year < 2013 AND wikidata IS NULL';
+$sql = 'SELECT * FROM publications WHERE `publications`.issn="1021-5506" AND year BETWEEN 1995 AND 2012 AND wikidata IS NULL';
+
+// Solenodon
+$sql = 'SELECT * FROM publications WHERE `publications`.issn="1608-0505"';
+
+
+$sql = 'SELECT * FROM publications WHERE `publications`.issn="0001-3943" and wikidata is null';
+
+$sql = 'SELECT * FROM publications WHERE issn="0084-5604" and year=2007 and wikidata is null and guid like "http%" ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+//$sql = 'SELECT * FROM publications WHERE guid="http://mail.izan.kiev.ua/vz-pdf/2007/1/01_Mitrofanov.pdf"';
+
+$sql = 'SELECT * FROM publications WHERE issn="0136-006X" and wikidata is null ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+
+$sql .= ' ORDER BY year, volume, issue, spage';
 
 $data = do_query($sql);
 
@@ -63,9 +85,12 @@ foreach ($data as $obj)
 	
 	$multilingual_data = do_query($sql);	
 	foreach ($multilingual_data as $mdata)
-	{
+	{	
+		// print_r($multilingual_data);
+	
 		switch ($mdata->key)
 		{
+			case 'abstract':
 			case 'title':
 				if (!isset($csl->multi))
 				{
@@ -84,7 +109,7 @@ foreach ($data as $obj)
 		}
 	}
 	
-	//print_r($csl);
+	// print_r($csl);
 	
 	echo json_encode($csl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
 }

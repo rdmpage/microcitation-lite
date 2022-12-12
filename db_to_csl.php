@@ -120,6 +120,15 @@ function data_to_csl($obj)
 	
 				$csl->link[] = $link;					
 				break;
+				
+			case 'waybackmachine':
+				$csl->WAYBACK = $v;
+				break;
+
+			case 'internetarchive':
+				$csl->ARCHIVE = $v;
+				break;
+				
 						
 			default:
 				break;

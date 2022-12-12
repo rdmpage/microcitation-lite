@@ -2,6 +2,9 @@
 
 error_reporting(E_ALL);
 
+require_once 'vendor/autoload.php';
+use LanguageDetection\Language;
+
 require_once (dirname(__FILE__) . '/nameparse.php');
 
 $debug = false;
@@ -181,15 +184,48 @@ function process_ris_key($key, $value, &$obj)
 			
 		case 'T1':
 		case 'TI':
+		case 'TT':
 			$value = preg_replace('/([^\s])\(/', '$1 (', $value);	
 			$value = str_replace("\ü", "ü", $value);
 			$value = str_replace("\ö", "ö", $value);
 
 			$value = str_replace("“", "\"", $value);
 			$value = str_replace("”", "\"", $value);
-						
-			$obj->title = $value;
+			$value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			
+			if (!isset($obj->title))
+			{
+				$obj->title = $value;
+			}
+			else
+			{
+				// multilingual
+				if (!isset($obj->multi))
+				{
+					$obj->multi = new stdclass;
+					$obj->multi->_key = new stdclass;					
+				}
+				
+				if (!isset($obj->multi->_key->{'title'}))
+				{
+					$obj->multi->_key->{'title'} = new stdclass;					
+				}
+				
+				// store exiting title (language detection may be a bit ropey)
+								
+				$ld = new Language(['en', 'es']);						
+				$language = $ld->detect($obj->title);
+				
+				// in some cases assume English
+				$obj->multi->_key->{'title'}->{'en'} = $obj->title;	
+				
+				// store other title		
+				$language = $ld->detect($value);				
+				$obj->multi->_key->{'title'}->{$language} = $value;			
+			}
 			break;
+			
+		
 				
 		/*
 		// Handle cases where both pages SP and EP are in this field
@@ -304,11 +340,19 @@ function process_ris_key($key, $value, &$obj)
 			$obj->DOI = $value;
 			break;			
 			
-		case 'L1':			
-			$link = new stdclass;
-			$link->{'content-type'} = 'application/pdf';			
-			$link->URL = $value;
-			$obj->link[] = $link;
+		// hack
+		case 'L1':
+			if (is_numeric($value))
+			{
+				$obj->{'article-number'} = $value;
+			}
+			else
+			{
+				$link = new stdclass;
+				$link->{'content-type'} = 'application/pdf';			
+				$link->URL = $value;
+				$obj->link[] = $link;
+			}
 			break;
 
 		case 'UR':
@@ -417,8 +461,6 @@ function import_ris($ris, $callback_func = '')
 function import_ris_file($filename, $callback_func = '')
 {
 	global $debug;
-	$debug = false;
-	//$debug = true;
 	
 	$file_handle = fopen($filename, "r");
 			
@@ -467,7 +509,7 @@ function import_ris_file($filename, $callback_func = '')
 		if (isset($key) && ($key == 'ER'))
 		{
 			$state = 0;
-						
+			
 			// Cleaning...						
 			if ($debug)
 			{

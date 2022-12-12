@@ -509,6 +509,11 @@ function csl_to_sql($csl, $table = "publications")
 				$values[] = '"' . $v . '"';	
 				break;		
 
+			case 'JSTOR':
+				$keys[] ='jstor';
+				$values[] = '"' . $v . '"';	
+				break;		
+
 			case 'URL':
 				$keys[] ='url';
 				$values[] = '"' . $v . '"';	
@@ -542,6 +547,7 @@ function csl_to_sql($csl, $table = "publications")
 				break;
 
 			case 'title':
+				// handle case whwere it might be an array
 				if (is_array($v))
 				{
 					if (count($v) > 0)
@@ -554,30 +560,40 @@ function csl_to_sql($csl, $table = "publications")
 				{
 					$keys[] = 'title';
 					$values[] = '"' . str_replace('"', '""', $v) . '"';	
-					
-					/*
-					$language = 'en';
-
-					if (preg_match('/\p{Han}+/u', $v))
+				}
+				break;
+				
+			case 'multi':
+				if (isset($v->_key))
+				{
+					foreach ($v->_key as $mlkey => $mlvalues)
 					{
-						$language = 'zh';
-					}
-		
-					// multilingual
-					$kk = array();
-					$vv = array();
-					$kk[] = "`key`";
-					$vv[] = '"title"';
+						switch ($mlkey)
+						{
+							case 'title':
+								foreach ($mlvalues as $language => $language_string)
+								{
+									$kk = array();
+									$vv = array();
+									$kk[] = "`key`";
+									$vv[] = '"title"';
 
-					$kk[] = 'language';
-					$vv[] = '"' . $language . '"';
+									$kk[] = 'language';
+									$vv[] = '"' . $language . '"';
 			
-					$kk[] = 'value';
-					$vv[] = '"' . addcslashes($v, '"') . '"';
+									$kk[] = 'value';
+									$vv[] = '"' . str_replace('"', '""', $language_string) . '"';	
 
-					$multilingual_keys[] = $kk;
-					$multilingual_values[] = $vv;
-					*/														
+									$multilingual_keys[] = $kk;
+									$multilingual_values[] = $vv;								
+								}
+								break;
+						
+						
+							default:
+								break;
+						}
+					}
 				}
 				break;
 
@@ -715,7 +731,7 @@ function csl_to_sql($csl, $table = "publications")
 	
 	$sql = 'REPLACE INTO ' . $table . '(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
 
-	/*	
+	
 	$n = count($multilingual_keys);
 	for($i =0; $i < $n; $i++)
 	{
@@ -725,7 +741,6 @@ function csl_to_sql($csl, $table = "publications")
 		$sql .= 'REPLACE INTO multilingual(' . join(',', $multilingual_keys[$i]) . ') values('
 			. join(',', $multilingual_values[$i]) . ');' . "\n";
 	}
-	*/
 	
 	return $sql;
 }
