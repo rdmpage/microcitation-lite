@@ -56,6 +56,47 @@ $sql = 'SELECT * FROM publications WHERE issn="1123-6787" AND pdf IS NOT NULL OR
 
 $sql = 'SELECT * FROM publications WHERE `publications`.journal="Holarctic Lepidoptera" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
 
+$sql = 'SELECT * FROM publications WHERE issn="1028-6764" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE issn="1608-0505" AND pdf IS NOT NULL and volume=8 ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE issn="0001-3943" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'select * from ia_tmp 
+inner join publications ON ia_tmp.ia = publications.internetarchive
+where issn="0084-5604"
+AND ia_tmp.title <> publications.title;';
+
+$sql = 'select * from publications where issn="0084-5604" and internetarchive is null and pdf is not null and title is not null ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'select * from publications where pdf IN (
+"http://mail.izan.kiev.ua/vz-pdf/2009/4/08_Protasov&all.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2009/5/12_Dyadichko&Gramma.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2010/2/08_Matushkina%20&%20Bach.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2010/3/11_Gural-Sverlova&al.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2010/4/09_Shevchuk&Dovgal.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2010/6/03_Kornyushin&Gereben.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2011/2/06_Glotov&all.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2011/2/09_Manjary&Roy.pdf",
+"http://mail.izan.kiev.ua/vz-pdf/2011/6/01_Kornyushin&all.pdf"
+)';
+
+$sql = 'SELECT * FROM publications WHERE issn="0136-006X" 
+AND volume BETWEEN 1 AND 18
+AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE issn="0136-006X" 
+AND (volume BETWEEN 19 AND 31) OR (volume LIKE "S%")
+AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE pdf="https://kmkjournals.com/upload/PDF/ArthropodaSelecta/30/30_1_001_Spiridonov_Obit_short_for_Inet.pdf"';
+
+// JSTOR to BioStor
+$sql = 'SELECT * FROM publications WHERE issn="0096-3844" AND authors IS NOT NULL and spage IS NOT NULL 
+AND year >= 1940
+ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+
 
 $data = do_query($sql);
 

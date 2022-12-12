@@ -7,6 +7,7 @@
         }
     ],
     "require": {
-        "renanbr/bibtex-parser": "^2.1"
+        "renanbr/bibtex-parser": "^2.1",
+        "patrickschur/language-detection": "^3.4"
     }
 }
