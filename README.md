@@ -77,6 +77,16 @@ SELECT wikidata, "P953", """" || pdf || """",  "P2701", "Q42332", "P1065", """" 
 ```sql
 SELECT wikidata, "P724", """" || internetarchive || """" FROM publications WHERE doi LIKE "10.5635/ASED%" AND wikidata IS NOT NULL AND internetarchive IS NOT NULL;
 ```
+### Add volume and issue
+
+```sql
+SELECT wikidata, "P478", """" || volume || """" FROM publications WHERE issn="2346-9641" AND wikidata IS NOT NULL AND volume IS NOT NULL;
+```
+
+```sql
+SELECT wikidata, "P433", """" || issue || """" FROM publications WHERE issn="2346-9641" AND wikidata IS NOT NULL AND issue IS NOT NULL;
+```
+
 
 ### Add multilingual titles and labels
 

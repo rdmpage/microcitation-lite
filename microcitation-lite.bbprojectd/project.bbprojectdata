@@ -14,6 +14,7 @@
 		<string>374052A7-4132-4BF1-836A-3A47BE97DE36</string>
 		<string>C60D2967-127E-4521-9CFE-7974A3479447</string>
 		<string>900715B7-E5B8-4854-814F-990386C920F3</string>
+		<string>EDFD5373-F0F8-4B7D-8AF2-8B3AA44B1E25</string>
 		<string>BFC4D56F-5C1A-4ADC-80EF-C141176674F7</string>
 		<string>8C7D1FD3-DA4B-4A65-B3E3-66241BFF176E</string>
 		<string>ABC1B0BA-463F-4800-A351-3E653F71A698</string>
@@ -22,7 +23,6 @@
 		<string>590E0A22-46B7-403A-A557-2578A133876E</string>
 		<string>91951AD0-D996-4BAB-B50E-4A3D7F2D570A</string>
 		<string>178D6FE7-700D-49B2-B112-004E0A501E78</string>
-		<string>3C6B5D3A-1403-4957-A19C-DE0B2D64A75B</string>
 		<string>573DA846-C826-42A6-B044-4C73AD83D4A7</string>
 	</array>
 	<key>ProjectItems</key>
@@ -170,56 +170,6 @@
 			</dict>
 			<key>ItemName</key>
 			<string>doi_to_sql.php</string>
-			<key>ItemType</key>
-			<string>FileReference</string>
-			<key>UserOverrideItemName</key>
-			<true/>
-		</dict>
-		<key>3C6B5D3A-1403-4957-A19C-DE0B2D64A75B</key>
-		<dict>
-			<key>ItemData</key>
-			<dict>
-				<key>BookmarkData</key>
-				<data>
-				Ym9vaygDAAAAAAQQMAAAAB7dYxcYHTwVrvgR80MDsJsN
-				ka0IYzTRwhAOWb8IKWJtJAIAAAQAAAADAwAAAAgAKAUA
-				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAACQAA
-				AAEBAABEb3dubG9hZHMAAAANAAAAAQEAAHJlZmJhc2Ut
-				MC45LjUAAAAIAAAAAQEAAGluY2x1ZGVzHgAAAAEBAAB0
-				cmFuc3RhYl9sYXRleF91bmljb2RlLmluYy5waHAAABgA
-				AAABBgAAEAAAACAAAAAwAAAARAAAAFwAAABsAAAACAAA
-				AAQDAACEXAAAAAAAAAgAAAAEAwAAlsYDAAAAAAAIAAAA
-				BAMAAMnGAwAAAAAACAAAAAQDAADS1UABAAAAAAgAAAAE
-				AwAAKtZAAQAAAAAIAAAABAMAAHDWQAEAAAAAGAAAAAEG
-				AAC0AAAAxAAAANQAAADkAAAA9AAAAAQBAAAIAAAAAAQA
-				AEGtpuCkAAAAGAAAAAECAAABAAAAAAAAAA8AAAAAAAAA
-				AAAAAAAAAAAIAAAABAMAAAQAAAAAAAAABAAAAAMDAAD1
-				AQAACAAAAAEJAABmaWxlOi8vLwwAAAABAQAATWFjaW50
-				b3NoIEhECAAAAAQDAAAAkIKW5wAAAAgAAAAABAAAQcQU
-				38QAAAAkAAAAAQEAAEVFREJDNDk1LURGNTItNDU2QS1C
-				NDMxLUZCNjA3QkYwNEFEMRgAAAABAgAAgQAAAAEAAADv
-				EwAAAQAAAAAAAAAAAAAAAQAAAAEBAAAvAAAAAAAAAAEF
-				AADMAAAA/v///wEAAAAAAAAAEAAAAAQQAACUAAAAAAAA
-				AAUQAAAUAQAAAAAAABAQAABEAQAAAAAAAEAQAAA0AQAA
-				AAAAAAIgAAAQAgAAAAAAAAUgAACAAQAAAAAAABAgAACQ
-				AQAAAAAAABEgAADEAQAAAAAAABIgAACkAQAAAAAAABMg
-				AAC0AQAAAAAAACAgAADwAQAAAAAAADAgAAAcAgAAAAAA
-				AAHAAABkAQAAAAAAABHAAAAgAAAAAAAAABLAAAB0AQAA
-				AAAAABDQAAAEAAAAAAAAAA==
-				</data>
-				<key>FileURL</key>
-				<string>file:///Users/rpage/Downloads/refbase-0.9.5/includes/transtab_latex_unicode.inc.php</string>
-				<key>HasSecurityScope</key>
-				<true/>
-				<key>RelativePath</key>
-				<string>../../Downloads/refbase-0.9.5/includes/transtab_latex_unicode.inc.php</string>
-				<key>TypeID</key>
-				<string>_CFileLocator</string>
-				<key>Version</key>
-				<integer>1</integer>
-			</dict>
-			<key>ItemName</key>
-			<string>transtab_latex_unicode.inc.php</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -1003,6 +953,56 @@
 			</dict>
 			<key>ItemName</key>
 			<string>composer.json</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>EDFD5373-F0F8-4B7D-8AF2-8B3AA44B1E25</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vaywDAAAAAAQQMAAAAFb/N4HqovSB1asz9x151Lja
+				pFI8E3F3xOHSEA/LlkBuHAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAABIAAAABAQAAbWljcm9jaXRhdGlv
+				bi1saXRlAAAPAAAAAQEAAGhhcnZlc3RfdHN2LnBocAAU
+				AAAAAQYAABAAAAAgAAAAMAAAAEAAAABcAAAACAAAAAQD
+				AACEXAAAAAAAAAgAAAAEAwAAlsYDAAAAAAAIAAAABAMA
+				AEDoHgAAAAAACAAAAAQDAAC9H78AAAAAAAgAAAAEAwAA
+				9blZAgAAAAAUAAAAAQYAAJAAAACgAAAAsAAAAMAAAADQ
+				AAAACAAAAAAEAABBxKZqPov5tBgAAAABAgAAAQAAAAAA
+				AAAPAAAAAAAAAAAAAAAAAAAACAAAAAQDAAADAAAAAAAA
+				AAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTovLy8MAAAA
+				AQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAJCClucAAAAI
+				AAAAAAQAAEHEf2qigAAAJAAAAAEBAABFRURCQzQ5NS1E
+				RjUyLTQ1NkEtQjQzMS1GQjYwN0JGMDRBRDEYAAAAAQIA
+				AIEAAAABAAAA7xMAAAEAAAAAAAAAAAAAAAEAAAABAQAA
+				LwAAAAAAAAABBQAAGgAAAAEBAABOU1VSTERvY3VtZW50
+				SWRlbnRpZmllcktleQAABAAAAAMDAAB8jQAA2AAAAP7/
+				//8BAAAAAAAAABEAAAAEEAAAdAAAAAAAAAAFEAAA4AAA
+				AAAAAAAQEAAADAEAAAAAAABAEAAA/AAAAAAAAAACIAAA
+				2AEAAAAAAAAFIAAASAEAAAAAAAAQIAAAWAEAAAAAAAAR
+				IAAAjAEAAAAAAAASIAAAbAEAAAAAAAATIAAAfAEAAAAA
+				AAAgIAAAuAEAAAAAAAAwIAAA5AEAAAAAAAABwAAALAEA
+				AAAAAAARwAAAIAAAAAAAAAASwAAAPAEAAAAAAAAQ0AAA
+				BAAAAAAAAADsAQCAEAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/microcitation-lite/harvest_tsv.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./harvest_tsv.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>harvest_tsv.php</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>

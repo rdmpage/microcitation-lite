@@ -504,6 +504,11 @@ function csl_to_sql($csl, $table = "publications")
 				$values[] = '"' . $v . '"';	
 				break;		
 
+			case 'CNKI':
+				$keys[] ='cnki';
+				$values[] = '"' . $v . '"';	
+				break;		
+
 			case 'HANDLE':
 				$keys[] ='handle';
 				$values[] = '"' . $v . '"';	
@@ -609,6 +614,11 @@ function csl_to_sql($csl, $table = "publications")
 					$values[] = '"' . str_replace('"', '""', $v) . '"';					
 				}
 				break;
+				
+			case 'ISBN':
+				$keys[] ='isbn';
+				$values[] = '"' . $v[0] . '"';	
+				break;										
 	
 			case 'issued':
 				$keys[] = 'year';

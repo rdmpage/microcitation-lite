@@ -106,7 +106,8 @@ foreach ($keys as $k)
 }
 
 $sql = 'SELECT * ';
-$sql .= 'FROM publications_doi ';
+//$sql .= 'FROM publications_doi ';
+$sql .= 'FROM publications ';
 $sql .= 'WHERE issn="' . $parameters['issn'] . '" ';
 
 if (isset($parameters['author']))
@@ -150,6 +151,25 @@ foreach ($data as $obj)
 		}
 		$doc->DOI[] = $obj->doi;
 	}
+
+	if (isset($obj->url))	
+	{
+		if (!isset($doc->URL))
+		{
+			$doc->URL = array();
+		}
+		$doc->URL[] = $obj->url;
+	}
+	
+	if (isset($obj->wikidata))	
+	{
+		if (!isset($doc->WIKIDATA))
+		{
+			$doc->WIKIDATA = array();
+		}
+		$doc->WIKIDATA[] = $obj->wikidata;
+	}
+	
 }
 
 
@@ -164,7 +184,7 @@ if (count($data) == 1)
 */
 
 
-if (isset($doc->DOI))
+if (isset($doc->DOI) || isset($doc->URL) || isset($doc->WIKIDATA))
 {
 	$doc->status = 200;
 }
