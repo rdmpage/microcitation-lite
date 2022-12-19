@@ -103,6 +103,14 @@ function data_to_csl($obj)
 			case 'doi':
 				$csl->DOI = $v;
 				break;
+				
+			case 'doi_agency':
+				$csl->doi_agency = $v;
+				break;
+				
+			case 'cnki':
+				$csl->CNKI = $v;
+				break;				
 
 			case 'handle':
 				$csl->HANDLE = $v;
