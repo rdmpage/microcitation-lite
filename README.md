@@ -64,6 +64,13 @@ SELECT """" || pdf || ",""" FROM publications WHERE issn='1123-6787' AND pdf IS 
 
 ## Wikidata
 
+### Add DOIs
+
+```sql
+SELECT wikidata, "P356", """" || UPPER(doi) || """" , "P2378" , "Q5188229" FROM publications_doi WHERE issn='0459-8113' and updated > '2022-12-29 14:00:00' AND wikidata IS NOT NULL AND doi IS NOT NULL;
+```
+
+
 ### Adding PDF with wayback archive URL
 
 Add qualifiers that say it’s a PDF and it’s backed up.

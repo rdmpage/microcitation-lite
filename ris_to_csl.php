@@ -266,11 +266,16 @@ function process_ris_key($key, $value, &$obj)
 			break;
 			
 		case 'PY': // used by Ingenta, and others
-		case 'Y1':
-			$obj->issued = new stdclass;			
-			$obj->issued->{'date-parts'} = array();
+			if (!isset($obj->issued))
+			{		
+				$obj->issued = new stdclass;			
+				$obj->issued->{'date-parts'} = array();
+			}
 			
 			$date = $value;
+			
+			//echo "key=$key\n";
+			//echo "date=$date\n";
 		   
 		   // PY  - 2002-02-01T00:00:00///
 		   if (preg_match("/(?<year>[0-9]{4})-(?<month>[0-9]{1,2})-(?<day>[0-9]{1,2})/", $date, $matches))
@@ -329,7 +334,28 @@ function process_ris_key($key, $value, &$obj)
 		   {
 		   		$obj->issued->{'date-parts'}[0] = explode('-', $date);
 		   }
+		   
+		   
+		   // print_r($obj->issued);
+		   
 		   break;
+		   
+		case 'Y1':
+			if (!isset($obj->issued))
+			{		
+				$obj->issued = new stdclass;			
+				$obj->issued->{'date-parts'} = array();
+
+				$date = $value;
+
+			   if (preg_match("/^[0-9]{4}$/", $date))
+			   {                
+					$obj->issued->{'date-parts'}[0] = array(
+							(Integer)$date
+						);         
+			   }		   
+			}
+		   break;		   
 		   
 		case 'KW':
 			$obj->keyword[] = $value;

@@ -538,6 +538,7 @@ function csl_to_sql($csl, $table = "publications")
 				$values[] = '"' . str_replace('"', '""', $v) . '"';	
 				break;	
 	
+			case 'container_title': // Zenodo fuck up
 			case 'container-title':
 				if (is_array($v) && count($v) > 0)
 				{
@@ -606,7 +607,16 @@ function csl_to_sql($csl, $table = "publications")
 				if (is_array($v))
 				{
 					$keys[] = 'issn';
-					$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
+					
+					$issn = $v[0];
+					
+					//JaLC
+					if (strlen($issn) == 8)
+					{
+						$issn = substr($issn, 0, 4) . '-' . substr($issn, 4);
+					}
+					
+					$values[] = '"' . str_replace('"', '""', $issn) . '"';					
 				}
 				else 
 				{
