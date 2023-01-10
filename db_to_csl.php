@@ -100,6 +100,7 @@ function data_to_csl($obj)
 				$csl->ISSN[] = $v;
 				break;
 				
+				/*
 			case 'doi':
 				$csl->DOI = $v;
 				break;
@@ -107,6 +108,7 @@ function data_to_csl($obj)
 			case 'doi_agency':
 				$csl->doi_agency = $v;
 				break;
+				*/
 				
 			case 'cnki':
 				$csl->CNKI = $v;
@@ -118,6 +120,11 @@ function data_to_csl($obj)
 
 			case 'url':
 				$csl->URL = $v;
+				
+				if (preg_match('/www.zobodat.at\/publikation_articles.php\?id=(?<id>\d+)/', $csl->URL, $m))
+				{
+					$csl->ZOBODAT = $m['id'];
+				}
 				break;
 
 			case 'pdf':
