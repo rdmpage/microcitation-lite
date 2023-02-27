@@ -3,11 +3,13 @@
 require_once (dirname(__FILE__) . '/nameparse.php');
 require_once (dirname(__FILE__) . '/csl_utils.php');
 
-
-
 //----------------------------------------------------------------------------------------
 
 $filename = 'test.tsv';
+$filename = 'jasb.tsv';
+
+$filename = '/Users/rpage/Desktop/Journals to do/Asiatic Society of Bengal/Journal of the Asiatic Society of Bengal - Sheet1.tsv';
+$filename = '/Users/rpage/Desktop/Journals to do/Asiatic Society of Bengal/Journal and Proceedings of the Asiatic Society of Bengal - Sheet1.tsv';
 
 $headings = array();
 
@@ -44,7 +46,7 @@ while (!feof($file_handle))
 				}
 			}
 		
-			// print_r($obj);	
+			//print_r($obj);	
 			
 			// convert to CSL
 			
@@ -68,8 +70,14 @@ while (!feof($file_handle))
 						
 					case 'spage':
 					case 'epage':
-						echo "*** TO DO ***\n";
-						exit();
+						if (isset($reference->page))
+						{
+							$reference->page .= '-' . $v;
+						}
+						else
+						{
+							$reference->page = $v;
+						}
 						break;
 			
 					case 'journal':

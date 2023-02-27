@@ -540,10 +540,13 @@ function csl_to_sql($csl, $table = "publications")
 	
 			case 'container_title': // Zenodo fuck up
 			case 'container-title':
-				if (is_array($v) && count($v) > 0)
+				if (is_array($v))
 				{
-					$keys[] = 'journal';
-					$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
+					if (count($v) > 0)
+					{
+						$keys[] = 'journal';
+						$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
+					}
 				}
 				else 
 				{
@@ -709,7 +712,7 @@ function csl_to_sql($csl, $table = "publications")
 				if (count($authors) > 0)
 				{
 					$keys[] = 'authors';
-					$values[] = '"' . join(';', $authors) . '"';						
+					$values[] = '"' . str_replace('"', '""', join(';', $authors)) . '"';	
 				}
 				break;
 		
@@ -717,29 +720,43 @@ function csl_to_sql($csl, $table = "publications")
 				foreach ($v as $link)
 				{
 					if (($link->{'content-type'} == 'application/pdf') && ($pdf == ''))
-					{
-						$keys[] = 'pdf';
-						$values[] = '"' . $link->URL . '"';		
-					
+					{					
 						$pdf = $link->URL;	
 					}
 					
 					// JALC typically has content-type = "unspecified"
 					if (preg_match('/_pdf$/', $link->URL) && ($pdf == ''))
 					{
-						$keys[] = 'pdf';
-						$values[] = '"' . $link->URL . '"';		
-					
 						$pdf = $link->URL;	
 					}
 					
 				}					
 				break;
 				
+				// some have PDF as a primary resource, e.g. 10.18500/1814-6090-2022-22-3-4-147-157
+			case 'resource':
+				if (isset($v->primary))
+				{
+					if (isset($v->primary->URL))
+					{
+						if (preg_match('/\.pdf$/', $v->primary->URL))
+						{
+							$pdf = $v->primary->URL;	
+						}
+					}				
+				}				
+				break;
+				
 							
 			default:
 				break;
 		}
+	}
+	
+	if ($pdf != '')
+	{
+		$keys[] = 'pdf';
+		$values[] = '"' . $pdf . '"';		
 	}
 	
 	// store object itself as JSON

@@ -16,9 +16,13 @@ function data_to_csl($obj)
 			case 'type':
 			case 'volume':
 			case 'issue':
-			case 'title':
 				$csl->{$k} = $v;
 				break;
+				
+			case 'title':
+				$csl->{$k} = $v;
+				$csl->{$k} = preg_replace('/\.$/', '', $csl->{$k});
+				break;				
 				
 			case 'spage':
 				if (!isset($csl->page))
@@ -98,17 +102,15 @@ function data_to_csl($obj)
 					$csl->ISSN = array();
 				}
 				$csl->ISSN[] = $v;
-				break;
+				break;				
 				
-				/*
 			case 'doi':
 				$csl->DOI = $v;
 				break;
 				
 			case 'doi_agency':
 				$csl->doi_agency = $v;
-				break;
-				*/
+				break;				
 				
 			case 'cnki':
 				$csl->CNKI = $v;

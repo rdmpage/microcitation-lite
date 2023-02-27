@@ -69,8 +69,41 @@ $sql = 'SELECT * FROM publications WHERE issn="0084-5604" and year=2007 and wiki
 
 //$sql = 'SELECT * FROM publications WHERE guid="http://mail.izan.kiev.ua/vz-pdf/2007/1/01_Mitrofanov.pdf"';
 
-$sql = 'SELECT * FROM publications WHERE issn="0136-006X" and wikidata is null ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+$sql = 'SELECT * FROM publications WHERE issn="0188-4018" AND wikidata IS NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
 
+$sql = 'SELECT * FROM publications_doi WHERE guid="10.16373/j.cnki.ahr.200084"';
+$sql = 'SELECT * FROM publications_doi WHERE guid="10.3969/j.issn.1005-9628.2018.01.07"';
+
+$sql = 'SELECT * FROM publications_doi WHERE issn="1005-9628" AND wikidata IS NULL';
+
+$sql = 'SELECT * FROM publications WHERE issn="2079-0139" and wikidata IS NULL';
+
+$sql = 'SELECT * FROM publications WHERE issn="1864-8312" AND volume BETWEEN 77 AND 78 AND wikidata IS NULL';
+
+$sql = 'select * from publications where issn="1864-8312" and volume <77 and wikidata is null';
+
+$sql = 'select * from publications where issn="2095-0357" and cast(volume as int) < 6 and wikidata is null';
+$sql = 'select * from publications_doi where issn="2095-0357" and wikidata is null';
+
+$sql = 'select * from publications where issn="1814-6090" and wikidata is null';
+
+$sql = "select * from publications where issn='0013-8738' and wikidata is null";
+
+$sql = "select * from publications where issn='0367-1445' and wikidata is null and year < 2019";
+
+$sql = "select  * from publications where issn='1005-9628' and wikidata is null";
+$sql = "select  * from publications where issn='1000-7482' and wikidata is null and year >= 2020";
+
+$sql ="select * from publications where guid='http://med.wanfangdata.com.cn/Paper/Detail/PeriodicalPaper_zxxb200401004'";
+
+$sql = "select  * from publications where issn='0065-1710' and wikidata is null and year <= 1990";
+
+$sql = "select * from publications where issn='0065-1710' and guid LIKE '%azc_v%' and wikidata is null";
+
+$sql = "select * from publications where issn='0342-412X' and wikidata is null";
+$sql = "select * from publications where issn='1371-7057' and wikidata is null";
+
+$sql = "select * from publications_doi where guid='10.19615/j.cnki.1000-3118.200618'";
 
 $sql .= ' ORDER BY year, volume, issue, spage';
 
@@ -78,6 +111,7 @@ $data = do_query($sql);
 
 foreach ($data as $obj)
 {
+
 	$csl = data_to_csl($obj);
 
 	// Multiple languages?
@@ -109,7 +143,7 @@ foreach ($data as $obj)
 		}
 	}
 	
-	// print_r($csl);
+	//print_r($csl);
 	
 	echo json_encode($csl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
 }
