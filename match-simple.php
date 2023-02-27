@@ -2,6 +2,8 @@
 
 // match two sets of references from TSV files
 
+require_once(dirname(__FILE__) . '/compare.php');
+
 //----------------------------------------------------------------------------------------
 // get publications and group by year so we have "blocks"
 function get_data($filename)
@@ -43,7 +45,7 @@ function get_data($filename)
 					}
 				}
 		
-				print_r($obj);	
+				//print_r($obj);	
 			
 				if (isset($obj->year))
 				{
@@ -68,12 +70,13 @@ function get_data($filename)
 $one = get_data('one.tsv');
 $two = get_data('two.tsv');
 
-print_r($one);
-print_r($two);
+//print_r($one);
+//print_r($two);
 
 // compare
 
 $verbose = false;
+$verbose = true;
 
 foreach ($one as $year => $articles)
 {
@@ -103,77 +106,83 @@ foreach ($one as $year => $articles)
 
 		$m = count($k1);
 		$n = count($k2);
+		
+		$best_matches = array();
 
 		for ($i = 0; $i < $m; $i++)
 		{
+			$best_hit = -1;
+			$best_normalised = array(0,0);
+					
 			for ($j = 0; $j < $n; $j++)
-			{
-			
-				$clean1 = $k1[$i]->title;
-				$clean2 = $k2[$j]->title;
+			{								
+				// extra cleaning?
+				$text1 = $k1[$i]->title;
+				$text2 = $k2[$j]->title;
 				
-				$clean1 = str_replace('&lt;I&gt;', '', $clean1);
-				$clean1 = str_replace('&lt;/I&gt;', '', $clean1);
+				$result = compare_common_subsequence($text1, $text2);
 				
-				$clean1 = strtolower(strip_tags($clean1));
-				$clean2 = strtolower(strip_tags($clean2));
-				
-				$clean1 = substr($clean1, 0, 255);
-				$clean2 = substr($clean2, 0, 255);
-		
-				$d = levenshtein($clean1, $clean2);
-		
-				if ($d <= 5)
+				if ($result->normalised[1] > 0.95)
 				{
-					if ($verbose)
+					// one string is almost an exact substring of the other
+					if ($result->normalised[0] > 0.75)
 					{
-						echo "\n-- " . $k1[$i]->title . "\n";
-						echo "-- " . $k2[$j]->title . "\n";
+						if ($result->normalised[1] > $best_normalised[1] && $result->normalised[0] >= $best_normalised[0])
+						{
+							$best_hit = $j;
+							$best_normalised = $result->normalised;
+						}
 					}
-			
-					// do something here
-					/*
-					if (isset($k2[$j]->wikidata))
-					{
-						echo 'UPDATE publications SET wikidata="' . $k2[$j]->wikidata . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
-					}
-					*/
-					
-					/*
-					// one has wikidata, update two
-					if (isset($k1[$i]->wikidata))
-					{
-						echo 'UPDATE publications SET wikidata="' . $k1[$i]->wikidata . '" WHERE guid="' . $k2[$j]->guid . '";' . "\n";
-					}
-					*/
-
-					// two has PDF, update one
-					if (isset($k2[$j]->pdf))
-					{
-						echo 'UPDATE publications_doi SET pdf="' . $k2[$j]->pdf . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
-					}
-					
-					// two has internetarchive, update one
-					if (isset($k2[$j]->internetarchive))
-					{
-						echo 'UPDATE publications_doi SET internetarchive="' . $k2[$j]->internetarchive . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
-					}
-					
-					// two has internetarchive, update one
-					if (isset($k2[$j]->work))
-					{
-						echo 'UPDATE publications SET wikidata="' . str_replace('http://www.wikidata.org/entity/', '', $k2[$j]->work) . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
-					}
-
-					// two has researchgate
-					if (isset($k2[$j]->id) && isset($k1[$i]->wikidata))
-					{
-						echo $k1[$i]->wikidata . "\tP5875\t\"" . $k2[$j]->id . "\"\n";
-					}
-					
-					
 				}
-	
+			}
+				
+			if ($best_hit != -1)
+			{
+				$j = $best_hit;
+				
+				if ($verbose)
+				{
+					echo "\n-- " . $k1[$i]->title . "\n";
+					echo "-- " . $k2[$j]->title . "\n";
+				}
+		
+				// do something here
+				
+				if (isset($k2[$j]->wikidata))
+				{
+					echo 'UPDATE publications SET wikidata="' . $k2[$j]->wikidata . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+				}
+				
+				// one has wikidata, update two
+				if (isset($k1[$i]->wikidata))
+				{
+					echo 'UPDATE publications SET wikidata="' . $k1[$i]->wikidata . '" WHERE guid="' . $k2[$j]->guid . '";' . "\n";
+				}
+				
+				// two has PDF, update one
+				if (isset($k2[$j]->pdf))
+				{
+					echo 'UPDATE publications_doi SET pdf="' . $k2[$j]->pdf . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+				}
+				
+				// two has internetarchive, update one
+				if (isset($k2[$j]->internetarchive))
+				{
+					echo 'UPDATE publications_doi SET internetarchive="' . $k2[$j]->internetarchive . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+				}
+				
+				// two has internetarchive, update one
+				if (isset($k2[$j]->work))
+				{
+					echo 'UPDATE publications SET wikidata="' . str_replace('http://www.wikidata.org/entity/', '', $k2[$j]->work) . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+				}
+
+				// two has researchgate
+				if (isset($k2[$j]->id) && isset($k1[$i]->wikidata))
+				{
+					echo $k1[$i]->wikidata . "\tP5875\t\"" . $k2[$j]->id . "\"\n";
+				}
+			
 			}
 		}
 	}
