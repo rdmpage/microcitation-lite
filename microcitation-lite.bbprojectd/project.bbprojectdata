@@ -9,9 +9,11 @@
 		<string>9026D00B-492A-4740-BC38-52A7098776EA</string>
 		<string>E678AFCA-CCEE-4E72-8247-E315286D20FE</string>
 		<string>D4126244-8F42-44DF-928B-D84FE15AFF4D</string>
+		<string>3C571331-0DCA-4C22-8A54-8D38C4BFE6F1</string>
 		<string>9DE702EA-BDEF-4298-BE04-2818494F1589</string>
 		<string>39397C3B-465A-4DA8-B7F1-57191C298D5C</string>
 		<string>374052A7-4132-4BF1-836A-3A47BE97DE36</string>
+		<string>1C92C3EA-7812-4DDA-A026-6B4EC1F96D28</string>
 		<string>C60D2967-127E-4521-9CFE-7974A3479447</string>
 		<string>900715B7-E5B8-4854-814F-990386C920F3</string>
 		<string>EDFD5373-F0F8-4B7D-8AF2-8B3AA44B1E25</string>
@@ -20,10 +22,12 @@
 		<string>ABC1B0BA-463F-4800-A351-3E653F71A698</string>
 		<string>DCA1D1AD-237C-4F60-A51C-01D4F2865F4C</string>
 		<string>A223F399-005C-4505-B5FD-6273254B6054</string>
+		<string>47EA908D-2CF9-407B-BF21-9D9B30954314</string>
 		<string>590E0A22-46B7-403A-A557-2578A133876E</string>
 		<string>91951AD0-D996-4BAB-B50E-4A3D7F2D570A</string>
 		<string>178D6FE7-700D-49B2-B112-004E0A501E78</string>
 		<string>573DA846-C826-42A6-B044-4C73AD83D4A7</string>
+		<string>C3B2B292-A624-4642-B480-93D66A3C7285</string>
 	</array>
 	<key>ProjectItems</key>
 	<dict>
@@ -72,6 +76,54 @@
 			</dict>
 			<key>ItemName</key>
 			<string>ris_to_csl.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>1C92C3EA-7812-4DDA-A026-6B4EC1F96D28</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va/ACAAAAAAQQMAAAANmIzT09SknK9Xcksn/DOi9M
+				o7XaDYYgWWlwo2DLXvdr7AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAABIAAAABAQAAbWljcm9jaXRhdGlv
+				bi1saXRlAAAPAAAAAQEAAGhhcnZlc3RfY3NsLnBocAAU
+				AAAAAQYAABAAAAAgAAAAMAAAAEAAAABcAAAACAAAAAQD
+				AACEXAAAAAAAAAgAAAAEAwAAlsYDAAAAAAAIAAAABAMA
+				AEDoHgAAAAAACAAAAAQDAAC9H78AAAAAAAgAAAAEAwAA
+				EVuVAgAAAAAUAAAAAQYAAJAAAACgAAAAsAAAAMAAAADQ
+				AAAACAAAAAAEAABBw3xCDAAAABgAAAABAgAAAQAAAAAA
+				AAAPAAAAAAAAAAAAAAAAAAAACAAAAAQDAAADAAAAAAAA
+				AAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTovLy8MAAAA
+				AQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAJCClucAAAAI
+				AAAAAAQAAEHEf2qigAAAJAAAAAEBAABFRURCQzQ5NS1E
+				RjUyLTQ1NkEtQjQzMS1GQjYwN0JGMDRBRDEYAAAAAQIA
+				AIEAAAABAAAA7xMAAAEAAAAAAAAAAAAAAAEAAAABAQAA
+				LwAAAAAAAAABBQAAzAAAAP7///8BAAAAAAAAABAAAAAE
+				EAAAdAAAAAAAAAAFEAAA4AAAAAAAAAAQEAAADAEAAAAA
+				AABAEAAA/AAAAAAAAAACIAAA2AEAAAAAAAAFIAAASAEA
+				AAAAAAAQIAAAWAEAAAAAAAARIAAAjAEAAAAAAAASIAAA
+				bAEAAAAAAAATIAAAfAEAAAAAAAAgIAAAuAEAAAAAAAAw
+				IAAA5AEAAAAAAAABwAAALAEAAAAAAAARwAAAIAAAAAAA
+				AAASwAAAPAEAAAAAAAAQ0AAABAAAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/microcitation-lite/harvest_csl.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./harvest_csl.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>harvest_csl.php</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -175,6 +227,54 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>3C571331-0DCA-4C22-8A54-8D38C4BFE6F1</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va/ACAAAAAAQQMAAAABjLVRzvS7PgkJTEQg+cnuE/
+				TNz76JEZryrl4K+GUjOl7AEAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAABIAAAABAQAAbWljcm9jaXRhdGlv
+				bi1saXRlAAAPAAAAAQEAAGRvaV9lbmhhbmNlLnBocAAU
+				AAAAAQYAABAAAAAgAAAAMAAAAEAAAABcAAAACAAAAAQD
+				AACEXAAAAAAAAAgAAAAEAwAAlsYDAAAAAAAIAAAABAMA
+				AEDoHgAAAAAACAAAAAQDAAC9H78AAAAAAAgAAAAEAwAA
+				Yf3pAwAAAAAUAAAAAQYAAJAAAACgAAAAsAAAAMAAAADQ
+				AAAACAAAAAAEAABBxEvj0YAAABgAAAABAgAAAQAAAAAA
+				AAAPAAAAAAAAAAAAAAAAAAAACAAAAAQDAAADAAAAAAAA
+				AAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTovLy8MAAAA
+				AQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAJCClucAAAAI
+				AAAAAAQAAEHEf2qigAAAJAAAAAEBAABFRURCQzQ5NS1E
+				RjUyLTQ1NkEtQjQzMS1GQjYwN0JGMDRBRDEYAAAAAQIA
+				AIEAAAABAAAA7xMAAAEAAAAAAAAAAAAAAAEAAAABAQAA
+				LwAAAAAAAAABBQAAzAAAAP7///8BAAAAAAAAABAAAAAE
+				EAAAdAAAAAAAAAAFEAAA4AAAAAAAAAAQEAAADAEAAAAA
+				AABAEAAA/AAAAAAAAAACIAAA2AEAAAAAAAAFIAAASAEA
+				AAAAAAAQIAAAWAEAAAAAAAARIAAAjAEAAAAAAAASIAAA
+				bAEAAAAAAAATIAAAfAEAAAAAAAAgIAAAuAEAAAAAAAAw
+				IAAA5AEAAAAAAAABwAAALAEAAAAAAAARwAAAIAAAAAAA
+				AAASwAAAPAEAAAAAAAAQ0AAABAAAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/microcitation-lite/doi_enhance.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./doi_enhance.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>doi_enhance.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>3DDABC17-4249-412A-9499-47809EFE4F4D</key>
 		<dict>
 			<key>ItemData</key>
@@ -220,6 +320,56 @@
 			<string>api</string>
 			<key>ItemType</key>
 			<string>FolderReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>47EA908D-2CF9-407B-BF21-9D9B30954314</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vaywDAAAAAAQQMAAAAGn6XFZFNWY8QG5qMLNB1tMO
+				8R5T55Lu261VTlel23SnHAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAABIAAAABAQAAbWljcm9jaXRhdGlv
+				bi1saXRlAAAQAAAAAQEAAG1hdGNoLXNpbXBsZS5waHAU
+				AAAAAQYAABAAAAAgAAAAMAAAAEAAAABcAAAACAAAAAQD
+				AACEXAAAAAAAAAgAAAAEAwAAlsYDAAAAAAAIAAAABAMA
+				AEDoHgAAAAAACAAAAAQDAAC9H78AAAAAAAgAAAAEAwAA
+				WeHdAgAAAAAUAAAAAQYAAJAAAACgAAAAsAAAAMAAAADQ
+				AAAACAAAAAAEAABBxMcq7oax4hgAAAABAgAAAQAAAAAA
+				AAAPAAAAAAAAAAAAAAAAAAAACAAAAAQDAAADAAAAAAAA
+				AAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTovLy8MAAAA
+				AQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAJCClucAAAAI
+				AAAAAAQAAEHEf2qigAAAJAAAAAEBAABFRURCQzQ5NS1E
+				RjUyLTQ1NkEtQjQzMS1GQjYwN0JGMDRBRDEYAAAAAQIA
+				AIEAAAABAAAA7xMAAAEAAAAAAAAAAAAAAAEAAAABAQAA
+				LwAAAAAAAAABBQAAGgAAAAEBAABOU1VSTERvY3VtZW50
+				SWRlbnRpZmllcktleQAABAAAAAMDAAABlAAA2AAAAP7/
+				//8BAAAAAAAAABEAAAAEEAAAdAAAAAAAAAAFEAAA4AAA
+				AAAAAAAQEAAADAEAAAAAAABAEAAA/AAAAAAAAAACIAAA
+				2AEAAAAAAAAFIAAASAEAAAAAAAAQIAAAWAEAAAAAAAAR
+				IAAAjAEAAAAAAAASIAAAbAEAAAAAAAATIAAAfAEAAAAA
+				AAAgIAAAuAEAAAAAAAAwIAAA5AEAAAAAAAABwAAALAEA
+				AAAAAAARwAAAIAAAAAAAAAASwAAAPAEAAAAAAAAQ0AAA
+				BAAAAAAAAADsAQCAEAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/microcitation-lite/match-simple.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./match-simple.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>match-simple.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
@@ -761,6 +911,56 @@
 			<string>.gitignore</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
+		</dict>
+		<key>C3B2B292-A624-4642-B480-93D66A3C7285</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vaygDAAAAAAQQMAAAADbFq+jK5dhaCBZUfcy00uIK
+				i2A9/Q+qJdAyJm0DD/QFGAIAAAQAAAADAwAAAAgAKAUA
+				AAABAQAAVXNlcnMAAAAFAAAAAQEAAHJwYWdlAAAABQAA
+				AAEBAABTaXRlcwAAABIAAAABAQAAbWljcm9jaXRhdGlv
+				bi1saXRlAAALAAAAAQEAAHdhbmZhbmcucGhwABQAAAAB
+				BgAAEAAAACAAAAAwAAAAQAAAAFwAAAAIAAAABAMAAIRc
+				AAAAAAAACAAAAAQDAACWxgMAAAAAAAgAAAAEAwAAQOge
+				AAAAAAAIAAAABAMAAL0fvwAAAAAACAAAAAQDAADobtAC
+				AAAAABQAAAABBgAAjAAAAJwAAACsAAAAvAAAAMwAAAAI
+				AAAAAAQAAEHD+GwUgAAAGAAAAAECAAABAAAAAAAAAA8A
+				AAAAAAAAAAAAAAAAAAAIAAAABAMAAAMAAAAAAAAABAAA
+				AAMDAAD1AQAACAAAAAEJAABmaWxlOi8vLwwAAAABAQAA
+				TWFjaW50b3NoIEhECAAAAAQDAAAAkIKW5wAAAAgAAAAA
+				BAAAQcR/aqKAAAAkAAAAAQEAAEVFREJDNDk1LURGNTIt
+				NDU2QS1CNDMxLUZCNjA3QkYwNEFEMRgAAAABAgAAgQAA
+				AAEAAADvEwAAAQAAAAAAAAAAAAAAAQAAAAEBAAAvAAAA
+				AAAAAAEFAAAaAAAAAQEAAE5TVVJMRG9jdW1lbnRJZGVu
+				dGlmaWVyS2V5AAAEAAAAAwMAAOKTAADYAAAA/v///wEA
+				AAAAAAAAEQAAAAQQAABwAAAAAAAAAAUQAADcAAAAAAAA
+				ABAQAAAIAQAAAAAAAEAQAAD4AAAAAAAAAAIgAADUAQAA
+				AAAAAAUgAABEAQAAAAAAABAgAABUAQAAAAAAABEgAACI
+				AQAAAAAAABIgAABoAQAAAAAAABMgAAB4AQAAAAAAACAg
+				AAC0AQAAAAAAADAgAADgAQAAAAAAAAHAAAAoAQAAAAAA
+				ABHAAAAgAAAAAAAAABLAAAA4AQAAAAAAABDQAAAEAAAA
+				AAAAAOgBAIAMAgAAAAAAAA==
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Sites/microcitation-lite/wanfang.php</string>
+				<key>HasSecurityScope</key>
+				<true/>
+				<key>RelativePath</key>
+				<string>./wanfang.php</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>wanfang.php</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
 		</dict>
 		<key>C60D2967-127E-4521-9CFE-7974A3479447</key>
 		<dict>

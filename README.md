@@ -56,7 +56,7 @@ WHERE `publications`.journal="Korean journal of applied entomology";
 
 Journal has two titles, DOIs all have title set to Animal Systematics, Evolution And Diversity, metadata harvested from https://koreascience.kr/ and by resolving DOIs. Will need to split DOIs into two sets, add additional multilingual data, archive PDFs, and also handle articles pre-DOI. Wikidata has two versions of the Korean Journal of Systematic Zoology, likely based on ISSN issues.
 
-## Wayback
+## Get PDFs
 
 ```sql
 SELECT """" || pdf || ",""" FROM publications WHERE issn='1123-6787' AND pdf IS NOT NULL;
@@ -68,6 +68,12 @@ SELECT """" || pdf || ",""" FROM publications WHERE issn='1123-6787' AND pdf IS 
 
 ```sql
 SELECT wikidata, "P356", """" || UPPER(doi) || """" , "P2378" , "Q5188229" FROM publications_doi WHERE issn='0459-8113' and updated > '2022-12-29 14:00:00' AND wikidata IS NOT NULL AND doi IS NOT NULL;
+```
+
+### Add CNKI
+
+```sql
+SELECT wikidata, "P6769", """" || cnki || """"  FROM publications_doi WHERE issn='2095-0357' and updated > '2022-12-29 14:00:00' AND wikidata IS NOT NULL AND cnki IS NOT NULL;
 ```
 
 
@@ -125,3 +131,8 @@ AND wikidata IS NOT NULL;
 
 
 
+### Translations
+
+```
+SELECT wikidata_en, "P629", wikidata_ru FROM trans WHERE wikidata_en IS NOT NULL and wikidata_ru IS NOT NULL and en IS NULL;
+```

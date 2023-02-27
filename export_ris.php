@@ -93,8 +93,32 @@ $sql = 'SELECT * FROM publications WHERE pdf="https://kmkjournals.com/upload/PDF
 
 // JSTOR to BioStor
 $sql = 'SELECT * FROM publications WHERE issn="0096-3844" AND authors IS NOT NULL and spage IS NOT NULL 
-AND year >= 1940
+AND year < 1910
 ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE issn="0188-4018" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE issn="1000-7482" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+//$sql = 'SELECT * FROM publications where issn="0136-006X" and issue LIKE "%–%" AND pdf IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+
+$sql = 'SELECT * FROM publications WHERE issn="0065-1710" AND pdf IS NOT NULL and internetarchive IS NULL and year="2018" ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+
+if (0)
+{
+	// Journal of the Asiatic Society of Bengal
+
+	$sql = "select * from publications 
+	WHERE issn='0368-1068' 
+	AND printf('%d', spage) = spage
+	AND year='1908'";
+
+	$sql = "select * from publications where issn='0368-1068' and authors like '%Moore%'";
+	//$sql = "select * from publications where issn='0368-1068' and title like '%blat%'";
+}
+
 
 
 

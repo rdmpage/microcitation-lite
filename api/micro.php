@@ -106,8 +106,15 @@ foreach ($keys as $k)
 }
 
 $sql = 'SELECT * ';
-//$sql .= 'FROM publications_doi ';
-$sql .= 'FROM publications ';
+
+if (1)
+{
+	$sql .= 'FROM publications_doi ';
+}
+else
+{
+	$sql .= 'FROM publications ';
+}
 $sql .= 'WHERE issn="' . $parameters['issn'] . '" ';
 
 if (isset($parameters['author']))
@@ -115,7 +122,14 @@ if (isset($parameters['author']))
 	$sql .= 'AND authors LIKE "%' . $parameters['author'] . '%" ';
 }
 
-$sql .= ' AND ' . $parameters['page'] . ' BETWEEN CAST(spage AS INT) AND CAST(epage AS INT)';
+if (preg_match('/(?<spage>\d+)-(?<epage>\d+)/', $parameters['page'], $m))
+{
+	$sql .= ' AND spage="' . $m['spage'] . '" AND epage="' .  $m['epage'] . '"';
+}
+else
+{
+	$sql .= ' AND ' . $parameters['page'] . ' BETWEEN CAST(spage AS INT) AND CAST(epage AS INT)';
+}
 
 // Some journals have changed volume numbering so we may have to rely on other tricks
 $use_volume = true;
