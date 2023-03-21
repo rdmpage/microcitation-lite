@@ -175,6 +175,21 @@ foreach ($data as $obj)
 		$doc->URL[] = $obj->url;
 	}
 	
+	if (isset($obj->pdf))	
+	{
+		if (!isset($doc->link))
+		{
+			$doc->link = array();
+		}
+		
+		$link = new stdclass;
+		$link->URL = $obj->pdf;
+		$link->{'content-type'} = "application/pdf";
+
+		$doc->link[] = $link;					
+	}
+	
+	
 	if (isset($obj->wikidata))	
 	{
 		if (!isset($doc->WIKIDATA))
