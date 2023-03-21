@@ -1,6 +1,7 @@
 <?php
 
-// match two sets of references from TSV files
+// match two sets of references from two TSV files, we use "year" to "block" the
+// data 
 
 require_once(dirname(__FILE__) . '/compare.php');
 
@@ -76,7 +77,7 @@ $two = get_data('two.tsv');
 // compare
 
 $verbose = false;
-$verbose = true;
+//$verbose = true;
 
 foreach ($one as $year => $articles)
 {
@@ -125,7 +126,7 @@ foreach ($one as $year => $articles)
 				if ($result->normalised[1] > 0.95)
 				{
 					// one string is almost an exact substring of the other
-					if ($result->normalised[0] > 0.75)
+					if ($result->normalised[0] > 0.90)
 					{
 						if ($result->normalised[1] > $best_normalised[1] && $result->normalised[0] >= $best_normalised[0])
 						{
@@ -146,7 +147,8 @@ foreach ($one as $year => $articles)
 					echo "-- " . $k2[$j]->title . "\n";
 				}
 		
-				// do something here
+				//------------------------------------------------------------------------
+				// do something here, this may need to be edited for the specific task
 				
 				if (isset($k2[$j]->wikidata))
 				{
