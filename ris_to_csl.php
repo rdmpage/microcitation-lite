@@ -20,6 +20,7 @@ $key_map = array(
 	'JO' => 'secondary_title',
 	'JF' => 'secondary_title',
 	'BT' => 'secondary_title', // To handle TROPICS fuckup
+	'T2' => 'secondary_title', // JSTOR
 	'VL' => 'volume',
 	'IS' => 'issue',
 	'SP' => 'spage',
@@ -48,6 +49,8 @@ function process_ris_key($key, $value, &$obj)
 	global $debug;
 	
 	//echo "key=$key\n";
+	
+	if ($value == "") return;
 	
 	switch ($key)
 	{
@@ -144,6 +147,7 @@ function process_ris_key($key, $value, &$obj)
 	
 		case 'JF':
 		case 'JO':
+		case 'T2':
 			$value = mb_convert_case($value, 
 				MB_CASE_TITLE, mb_detect_encoding($value));
 				
@@ -173,6 +177,13 @@ function process_ris_key($key, $value, &$obj)
 			else
 			{
 				$obj->ISSN = array();
+				
+				if (preg_match('/(?<issn>[0-9X]{8})/i', $value, $m))
+				{
+					$value = substr($value, 0, 4) . '-' . substr($value, 4, 4);
+				}
+				
+				
 				$obj->ISSN[] = $value;
 			}	
 			break;
@@ -192,6 +203,8 @@ function process_ris_key($key, $value, &$obj)
 			$value = str_replace("“", "\"", $value);
 			$value = str_replace("”", "\"", $value);
 			$value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			
+			//echo $value . "\n";
 			
 			if (!isset($obj->title))
 			{
@@ -213,14 +226,24 @@ function process_ris_key($key, $value, &$obj)
 				
 				// store exiting title (language detection may be a bit ropey)
 								
-				$ld = new Language(['en', 'es']);						
+				$ld = new Language(['en', 'zh']);	
 				$language = $ld->detect($obj->title);
+				if (preg_match('/\p{Han}+/u', $obj->title))
+				{
+					$language = 'zh';
+				}
 				
 				// in some cases assume English
-				$obj->multi->_key->{'title'}->{'en'} = $obj->title;	
+				$obj->multi->_key->{'title'}->{$language} = $obj->title;	
 				
 				// store other title		
-				$language = $ld->detect($value);				
+				$language = $ld->detect($value);
+				if (preg_match('/\p{Han}+/u', $value))
+				{
+					$language = 'zh';
+				}
+				
+								
 				$obj->multi->_key->{'title'}->{$language} = $value;			
 			}
 			break;
@@ -257,12 +280,28 @@ function process_ris_key($key, $value, &$obj)
 		
 		// Keep it simple
 		case 'SP':
-			$obj->page 				= $value;
+			if ($value == "_") break;
+		
+			if (isset($obj->page))
+			{
+				$obj->page  = $value . '-' . $obj->page;
+			}
+			else
+			{
+				$obj->page 	= $value;
+			}
 			$obj->{'page-first'} 	= $value;
 			break;
 
 		case 'EP':
-			$obj->page 				.= '-' . $value;
+			if (isset($obj->page))
+			{
+				$obj->page  .= '-' . $value;
+			}
+			else
+			{
+				$obj->page 	= $value;
+			}
 			break;
 			
 		case 'PY': // used by Ingenta, and others
@@ -353,7 +392,21 @@ function process_ris_key($key, $value, &$obj)
 					$obj->issued->{'date-parts'}[0] = array(
 							(Integer)$date
 						);         
+			   }	
+			   
+			   // e.g. 1961-62
+			   if (preg_match("/^([0-9]{2})([0-9]{2})-([0-9]{2})$/", $date, $m))
+			   {                
+					$obj->issued->{'date-parts'}[0] = array(
+							(Integer)($m[1] + $m[2])
+						); 
+						
+					$obj->issued->{'date-parts'}[1] = array(
+							(Integer)($m[1] + $m[3])
+						);         
+						        
 			   }		   
+			   	   
 			}
 		   break;		   
 		   
@@ -386,11 +439,22 @@ function process_ris_key($key, $value, &$obj)
 			{
 				$obj->HANDLE = $m['id'];				
 			}
+			
+			if (preg_match('/https?:\/\/helda.helsinki.fi\/handle\/(?<id>.*)/', $value, $m))
+			{
+				$obj->HANDLE = $m['id'];				
+			}
 
 			if (preg_match('/https?:\/\/www.jstor.org\/stable\/(?<id>.*)/', $value, $m))
 			{
 				$obj->JSTOR = $m['id'];				
 			}
+			
+			if (preg_match('/cnki.net.*\&filename=(?<id>[A-Z]{4}[0-9]{4}[S|Z]?\d+)/', $value, $m))
+			{
+				$obj->CNKI = $m['id'];				
+			}
+			
 			
 			$obj->URL = $value;			
 			break;			
@@ -471,7 +535,7 @@ function import_ris($ris, $callback_func = '')
 		
 		if ($state == 1)
 		{
-			if (isset($value))
+			if (isset($value) && trim($value != ""))
 			{
 				process_ris_key($key, $value, $obj);
 			}
