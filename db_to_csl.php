@@ -20,6 +20,8 @@ function data_to_csl($obj)
 				break;
 				
 			case 'title':
+				$v = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+				$v = strip_tags($v);
 				$csl->{$k} = $v;
 				$csl->{$k} = preg_replace('/\.$/', '', $csl->{$k});
 				break;				
@@ -127,6 +129,17 @@ function data_to_csl($obj)
 				{
 					$csl->ZOBODAT = $m['id'];
 				}
+
+				if (preg_match('/dialnet.unirioja.es\/servlet\/articulo\?codigo=(?<id>\d+)/', $csl->URL, $m))
+				{
+					$csl->DIALNET = $m['id'];
+				}
+
+				if (preg_match('/jstor.org\/stable\/(?<id>\d+)/', $csl->URL, $m))
+				{
+					$csl->JSTOR = $m['id'];
+				}
+
 				break;
 
 			case 'pdf':
@@ -144,6 +157,10 @@ function data_to_csl($obj)
 
 			case 'internetarchive':
 				$csl->ARCHIVE = $v;
+				break;
+				
+			case 'license':
+				$csl->copyright = $v;
 				break;
 				
 						

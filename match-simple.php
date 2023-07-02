@@ -77,7 +77,7 @@ $two = get_data('two.tsv');
 // compare
 
 $verbose = false;
-//$verbose = true;
+$verbose = true;
 
 foreach ($one as $year => $articles)
 {
@@ -183,6 +183,39 @@ foreach ($one as $year => $articles)
 				if (isset($k2[$j]->id) && isset($k1[$i]->wikidata))
 				{
 					echo $k1[$i]->wikidata . "\tP5875\t\"" . $k2[$j]->id . "\"\n";
+				}
+				
+				//------------------------------------------------------------------------
+				//print_r($k1[$i]);
+				//print_r($k2[$j]);
+				
+				$ok = true;
+				
+				// sanity checks
+				if ($ok && isset($k1[$i]->volume) && isset($k2[$j]->volume))
+				{					
+					$ok = ($k1[$i]->volume == $k2[$j]->volume);
+				}
+				
+				if ($ok && isset($k1[$i]->spage) && isset($k2[$j]->spage))
+				{
+					$spage1 = $k1[$i]->spage;
+					$spage2 = $k2[$j]->spage;
+					
+					$spage1 = preg_replace('/^0+/', '', $spage1);
+					$spage2 = preg_replace('/^0+/', '', $spage2);
+					
+					$ok = ($spage1 == $spage2);
+				}
+				
+				if ($ok)
+				{
+					// do stuff
+					echo 'UPDATE publications SET alternative_id="' . $k2[$j]->doi . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+				}
+				else
+				{
+					echo "-- *** false match ***\n";
 				}
 			
 			}

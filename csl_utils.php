@@ -97,6 +97,7 @@ function csl_to_ris($csl)
 				}
 				else
 				{
+					
 					$ris_values[$csl_ris_map[$k]][] = $v;
 				}
 				break;
@@ -461,6 +462,14 @@ function csl_to_sql($csl, $table = "publications")
 	
 	if ($guid == '')
 	{
+		if (isset($csl->HANDLE))
+		{
+			$guid = $csl->HANDLE;
+		}
+	}	
+		
+	if ($guid == '')
+	{
 		if (isset($csl->URL))
 		{
 			$guid = $csl->URL;
@@ -766,8 +775,14 @@ function csl_to_sql($csl, $table = "publications")
 	$keys[] = 'json';
 	$values[] = "'" . $json . "'" ;
 	
-	$sql = 'REPLACE INTO ' . $table . '(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
-
+	if (1)
+	{	
+		$sql = 'REPLACE INTO ' . $table . '(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
+	}
+	else
+	{
+		$sql = 'INSERT OR IGNORE INTO ' . $table . '(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
+	}
 	
 	$n = count($multilingual_keys);
 	for($i =0; $i < $n; $i++)
@@ -775,8 +790,16 @@ function csl_to_sql($csl, $table = "publications")
 		$multilingual_keys[$i][] = 'guid';
 		$multilingual_values[$i][] = '"' . $guid . '"';
 
-		$sql .= 'REPLACE INTO multilingual(' . join(',', $multilingual_keys[$i]) . ') values('
-			. join(',', $multilingual_values[$i]) . ');' . "\n";
+		if (1)
+		{
+			$sql .= 'REPLACE INTO multilingual(' . join(',', $multilingual_keys[$i]) . ') values('
+				. join(',', $multilingual_values[$i]) . ');' . "\n";		
+		}
+		else
+		{
+			$sql .= 'INSERT OR IGNORE INTO multilingual(' . join(',', $multilingual_keys[$i]) . ') values('
+				. join(',', $multilingual_values[$i]) . ');' . "\n";
+		}
 	}
 	
 	return $sql;

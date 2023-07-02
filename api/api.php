@@ -50,7 +50,14 @@ function do_query($sql)
 
 $results = array();
 
-$sql = 'SELECT * FROM publications WHERE guid="' . $guid . '"';
+if (1)
+{
+	$sql = 'SELECT * FROM publications_doi WHERE guid="' . $guid . '"';
+}
+else
+{
+	$sql = 'SELECT * FROM publications WHERE guid="' . $guid . '"';
+}
 
 $data = do_query($sql);
 

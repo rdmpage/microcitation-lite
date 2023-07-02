@@ -5,3 +5,5 @@ microcitation.db-wal
 /junk/
 cookie.txt
 /cache-wanfang/
+*.db
+

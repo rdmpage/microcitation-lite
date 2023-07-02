@@ -5,7 +5,7 @@
 require_once (dirname(__FILE__) . '/csl_utils.php');
 require_once (dirname(__FILE__) . '/db_to_csl.php');
 
-$pdo = new PDO('sqlite:microcitation.db');
+$pdo = new PDO('sqlite:' . dirname(__FILE__) . '/microcitation.db');
 
 //----------------------------------------------------------------------------------------
 function do_query($sql)
@@ -104,6 +104,22 @@ $sql = 'SELECT * FROM publications WHERE issn="1000-7482" AND pdf IS NOT NULL OR
 
 
 $sql = 'SELECT * FROM publications WHERE issn="0065-1710" AND pdf IS NOT NULL and internetarchive IS NULL and year="2018" ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE journal="Zoölogische Monographieën"';
+
+$sql = 'SELECT * FROM publications WHERE issn="0867-1710" and internetarchive IS NULL and spage IS NOT NULL and authors IS NOT NULL ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED);';
+
+$sql = 'SELECT * FROM publications WHERE issn="0032-3780"';
+
+$sql = 'SELECT * FROM publications_doi WHERE issn="0093-4666" AND pdf IS NOT NULL AND license="http://creativecommons.org/licenses/by-nc-nd/4.0/"';
+
+$sql = 'SELECT * FROM publications WHERE issn="0031-5850" AND pdf IS NOT NULL';
+
+$sql = 'SELECT * FROM publications_doi WHERE issn="2077-7019" AND pdf IS NOT NULL';
+
+$sql = 'SELECT * FROM publications_doi WHERE pdf IN ("http://www.mycosphere.org/pdfs/MC2_5_No6.pdf", "")';
+
+$sql = "SELECT * FROM publications WHERE issn='0071-1268' and pdf is not null and internetarchive is null";
 
 
 if (0)

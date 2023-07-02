@@ -38,6 +38,7 @@ function get($url, $content_type = '')
 // query
 
 $journal = "Halteres";
+$journal = "ANNALS OF THE UPPER SILESIAN MUSEUM IN BYTOM, ENTOMOLOGY";
 
 $parameters = array(
 	'page' 	=> 1,
@@ -47,9 +48,11 @@ $parameters = array(
 
 $url = 'https://zenodo.org/api/records?' . http_build_query($parameters);
 
-echo $url ."\n";
+echo "-- $url\n";
 
-//$json = get($url);
+$json = get($url);
+
+/*
 
 $json = '{
     "aggregations": {
@@ -17882,6 +17885,8 @@ $json = '{
     }
 }';
 
+*/
+
 //echo $json;
 
 $obj = json_decode($json);
@@ -17900,6 +17905,7 @@ foreach ($obj->hits->hits as $hit)
 		$csl->type = 'article-journal';
 	
 		$csl->title = $hit->metadata->title;
+		$csl->title = html_entity_decode($csl->title, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 		$csl->DOI = $hit->doi;
 		$csl->doi_agency = 'datacite';
 	
@@ -17914,6 +17920,10 @@ foreach ($obj->hits->hits as $hit)
 			
 				switch ($csl->{'container-title'})
 				{
+					case 'ANNALS OF THE UPPER SILESIAN MUSEUM IN BYTOM, ENTOMOLOGY':
+						$csl->ISSN[] = '0867-1966';
+						break;
+					
 					case 'Halteres':
 						$csl->ISSN[] = '0973-1555';
 						break;
@@ -17999,6 +18009,7 @@ foreach ($obj->hits->hits as $hit)
 		if (isset($hit->metadata->description))
 		{
 			$csl->abstract = strip_tags($hit->metadata->description);
+			$csl->abstract = html_entity_decode($csl->abstract, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 		}
 		
 		//print_r($csl);

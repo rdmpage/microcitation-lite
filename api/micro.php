@@ -107,7 +107,7 @@ foreach ($keys as $k)
 
 $sql = 'SELECT * ';
 
-if (1)
+if (0)
 {
 	$sql .= 'FROM publications_doi ';
 }
@@ -120,15 +120,6 @@ $sql .= 'WHERE issn="' . $parameters['issn'] . '" ';
 if (isset($parameters['author']))
 {
 	$sql .= 'AND authors LIKE "%' . $parameters['author'] . '%" ';
-}
-
-if (preg_match('/(?<spage>\d+)-(?<epage>\d+)/', $parameters['page'], $m))
-{
-	$sql .= ' AND spage="' . $m['spage'] . '" AND epage="' .  $m['epage'] . '"';
-}
-else
-{
-	$sql .= ' AND ' . $parameters['page'] . ' BETWEEN CAST(spage AS INT) AND CAST(epage AS INT)';
 }
 
 // Some journals have changed volume numbering so we may have to rely on other tricks
@@ -148,6 +139,30 @@ if ($use_volume)
 	$sql .= 'AND volume="' . $parameters['volume'] . '" ';
 }
 
+// Pagination
+
+if (preg_match('/(?<spage>\d+)-(?<epage>\d+)/', $parameters['page'], $m))
+{
+	$sql .= ' AND spage="' . $m['spage'] . '" AND epage="' .  $m['epage'] . '"';
+}
+else
+{
+	$jstorlike = false;
+	
+	if (isset($parameters['issn']) && $parameters['issn'] == '0374-6313')
+	{
+		$jstorlike = true;
+	}
+
+	if ($jstorlike)
+	{
+		$sql .= ' AND ' . $parameters['page'] . ' >= CAST(spage AS INT) ORDER BY CAST(spage AS INT) DESC LIMIT 1';	
+	}
+	else
+	{
+		$sql .= ' AND ' . $parameters['page'] . ' BETWEEN CAST(spage AS INT) AND CAST(epage AS INT)';
+	}
+}
 
 
 $doc->sql = $sql;
