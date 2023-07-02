@@ -8,7 +8,7 @@ require_once(dirname(__FILE__) . '/csl_utils.php');
 
 function ris_import($csl)
 {
-	// print_r($csl);
+	//print_r($csl);
 	
 	echo csl_to_sql($csl);
 }

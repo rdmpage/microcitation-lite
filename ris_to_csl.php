@@ -405,7 +405,20 @@ function process_ris_key($key, $value, &$obj)
 							(Integer)($m[1] + $m[3])
 						);         
 						        
-			   }		   
+			   }
+			   
+			   // e.g. 1975-1976		   
+			   if (preg_match("/^([0-9]{4})-([0-9]{4})$/", $date, $m))
+			   {                
+					$obj->issued->{'date-parts'}[0] = array(
+							(Integer)($m[1])
+						); 
+						
+					$obj->issued->{'date-parts'}[1] = array(
+							(Integer)($m[2])
+						);         
+						        
+			   }
 			   	   
 			}
 		   break;		   

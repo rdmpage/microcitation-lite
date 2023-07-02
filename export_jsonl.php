@@ -105,7 +105,55 @@ $sql = "select * from publications where issn='1371-7057' and wikidata is null";
 
 $sql = "select * from publications_doi where guid='10.19615/j.cnki.1000-3118.200618'";
 
-$sql .= ' ORDER BY year, volume, issue, spage';
+$sql = 'select * from publications_doi where guid in (
+    "10.6119/jmst-013-1219-12",
+    "10.6662/tesfe.202111_41(4).002",
+    "10.6542/efntu.201912_33(4).0005",
+    "10.6620/zs.2022.61-02",
+    "10.6542/efntu.2017.31(1).3"
+    )';
+
+$sql = 'select * from publications where issn="0077-2135" and wikidata IS NULL';
+
+$sql = 'SELECT * FROM publications WHERE issn="0867-1710" and wikidata IS NULL 
+and spage IS NOT NULL and authors IS NOT NULL';
+
+$sql = 'select * from publications where issn="0366-3353" and wikidata IS NULL';
+
+$sql = 'select * from publications where issn="0366-3353" and wikidata IS NULL';
+
+$sql = "select * from publications where guid='https://dialnet.unirioja.es/servlet/articulo?codigo=3886942'";
+
+
+$sql = "select * from publications where issn='1810-9586' and wikidata is null";
+$sql = "select * from publications where issn='0170-110X' and authors <> 'Redaktion' and title <> 'Buchsprechungen' and epage IS NULL";
+
+$sql = "select * from publications where issn='1661-8041' and wikidata is null";
+$sql = "select * from publications where issn='0370-3207' and wikidata is null";
+
+$sql = "select * from publications where issn='1011-5498' and spage != 0";
+
+$sql = "select * from publications_doi where doi in ('10.4467/16890027AP.12.023.0783')";
+
+$sql = "select * from publications where issn='2195-9889'";
+
+$sql = "select * from publications where issn='1013-2732'";
+
+$sql = "select * from publications where doi in ('10.6043/j.issn.0438-0479.202008004')";
+
+$sql = "SELECT * FROM publications WHERE issn='0013-8827' AND flag=1";
+
+$sql = "SELECT * FROM publications WHERE issn='1004-5260'";
+
+$sql = "SELECT * FROM publications WHERE issn in ('0747-8194','0096-7815')";
+
+$sql = "SELECT * FROM publications WHERE issn='0385-5643'";
+
+$sql = "SELECT * FROM publications WHERE issn='0084-800X' and volume is not null";
+
+$sql = "SELECT * FROM publications WHERE issn='0373-2975' AND volume != 68 and wikidata IS NULL";
+
+$sql .= ' ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED)';
 
 $data = do_query($sql);
 

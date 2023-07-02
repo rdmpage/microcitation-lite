@@ -131,105 +131,118 @@ else
 //----------------------------------------------------------------------------------------
 
 
-$id = 2284; 	// Cryptogamie Mycologie
-$id = 542923; 	// Nuytsia
+$issns = array('2118-9773'); // EJT
+$start 	= 2023;
+$end 	= 2023;
 
-$id = 422565;
-$id = 30344;
+$issns = array('1424-2818'); // Diversity
+$start 	= 2020;
+$end 	= 2023;
 
-$id = 5533; 	// Nova Hedwigia
-$id = 54210; 	// South African Journal of Botany
-$id = 149285; 	// Mycosphere
-$id = 144625; 	// Mycokeys
-$id = 315451;	// Plant and Fungal Systematics
-$id = 148585;	// European Journal of Taxonomy
-$id = 204705; 	// Microorganisms
-$id = 311717; 	// Fungal Systematics and Evolution
-$id = 197285; 	// Phytotaxa
-$id = 79164; 	// Anales del Jardín Botánico de Madrid
-$id = 72459;	// Persoonia
-$id = 55383;	// American Journal of Botany
-$id = 53998;	// Mycological Progress
-$id = 125406;	// IMA Fungus
-$id = 30563;	// Microbiological Research
+$issns = array('0511-9618');
+$start 	= 2018;
+$end 	= 2023;
 
-$id = 5533; 	// Nova Hedwigia
-$id = 311495; 	// Karstenia
-$id = 55679;	// The Bryologist
-$id = 5787;		// Amphibia-Reptilia
-$id = 62933;	// Bulletin du Jardin botanique de l'État a Bruxelles
-$id = 71519;	// Canadian Journal of Botany
-$id = 72459;	// Persoonia
-$id = 245667;	// Revista Peruana de Biologia 
-$id = 72421;	// Notizblatt des Königl. Botanischen Gartens und Museums zu Berlin 
-$id = 107345; 	// Proceedings of the Zoological Society of London
-$id = 314924;	// Bonplandia
-$id = 306411;	// Acta Botanica Malacitana
-$id = 469482; 	// Muelleria
-$id = 55482; 	// Bulletin of the Torrey Botanical Club
-$id = 315165;	// Records of the Zoological Survey of India
-//$id = 297259;	// Records of the Indian Museum
-$id = 71321;	// Bulletin of the Peabody Museum of Natural History
-$id = 305963;	// Flora oder Allgemeine Botanische Zeitung
-$id = 105786;	// Proceedings of the Royal Entomological Society of London. Series B, Taxonomy
-$id = 126005;	// Smithsonian Contributions to Botany
-$id = 379736;	// Ecologica Montenegrina
-$id = 73440;	// Archives of Biological Sciences
-$id = 6032;		// Edinburgh Journal of Botany
 
-$url = 'http://data.crossref.org/depositorreport?pubid=J' . $id;
+$issns = array('1664-302X'); // Frontiers in Microbiology
+$start 	= 2016;
+$end 	= 2023;
 
-$text = get($url);
+$start 	= 2021;
+$end 	= 2021;
 
-$rows = explode("\n", $text);
+// 2022
+$issns = array(
+'0181-1584',
+'1314-4049',
+'2309-608X',
+'0003-6072',
+'1179-3155',
+'0166-0616',
+);
 
-//print_r($rows);
+$start 	= 2022;
+$end 	= 2022;
 
-$dois=array();
+$issns = array(
+'1179-3155',
+);
 
-foreach ($rows as $row)
-{
-	if (preg_match('/^(?<doi>10\.\d+[^\s]+)\s/', $row, $m))
-	{
-		$dois[] = $m['doi'];
-	}
-}
+$start 	= 2021;
+$end 	= 2021;
+
+//----------------------------------------------------------------------------------------
+// Kew Bulletin
+$issns = array(
+'0075-5974',
+);
+
+$start 	= 2013;
+$end 	= 2013;
+
+//----------------------------------------------------------------------------------------
+
+$limit = 500;
 
 $count = 1;
 
-foreach ($dois as $doi)
+foreach ($issns as $issn)
 {
-	// DOI prefix
-	$parts = explode('/', $doi);
-	$prefix = $parts[0];
-	
-	// Agency lookup
-	$agency = doi_to_agency($prefix_to_agency, $prefix, $doi);
-	
-	$doi = strtolower($doi);
 
-	$url = 'https://doi.org/' . $doi;	
-	$json = get($url, 'application/vnd.citationstyles.csl+json');
-	$obj = json_decode($json);
-	
-	if ($obj)	
+	for ($year = $start; $year <= $end; $year++)
 	{
-		if ($agency != '')
+
+		$url = 'https://api.crossref.org/works?filter=issn:' . $issn . ',from-pub-date:' . $year  . ',until-pub-date:' . ($year + 1);
+		
+		$url .= '&rows=' . $limit;
+		
+		echo "-- $url\n";
+		
+		$json = get($url);
+
+		//echo $json;
+
+		$obj = json_decode($json);
+
+		//print_r($obj);
+	
+		foreach ($obj->message->items as $item)
 		{
-			$obj->doi_agency = $agency;
-		}
+			$doi = $item->DOI;
+
+			// DOI prefix
+			$parts = explode('/', $doi);
+			$prefix = $parts[0];
 	
-		$sql = csl_to_sql($obj, 'publications_doi');		
-		echo $sql . "\n";
+			// Agency lookup
+			$agency = doi_to_agency($prefix_to_agency, $prefix, $doi);
+	
+			$doi = strtolower($doi);
+
+			$url = 'https://doi.org/' . $doi;	
+			$json = get($url, 'application/vnd.citationstyles.csl+json');
+			$obj = json_decode($json);
+	
+			if ($obj)	
+			{
+				if ($agency != '')
+				{
+					$obj->doi_agency = $agency;
+				}
+	
+				$sql = csl_to_sql($obj, 'publications_doi');		
+				echo $sql . "\n";
+			}
+	
+			// Give server a break every 10 items
+			if (($count++ % 5) == 0)
+			{
+				$rand = rand(1000000, 3000000);
+				echo "\n-- ...sleeping for " . round(($rand / 1000000),2) . ' seconds' . "\n\n";
+				usleep($rand);
+			}
+		}	
 	}
-	
-	// Give server a break every 10 items
-	if (($count++ % 5) == 0)
-	{
-		$rand = rand(1000000, 3000000);
-		echo "\n-- ...sleeping for " . round(($rand / 1000000),2) . ' seconds' . "\n\n";
-		usleep($rand);
-	}	
 }
 
 // save prefix file
