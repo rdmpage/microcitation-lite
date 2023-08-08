@@ -226,7 +226,8 @@ function process_ris_key($key, $value, &$obj)
 				
 				// store exiting title (language detection may be a bit ropey)
 								
-				$ld = new Language(['en', 'zh']);	
+				//$ld = new Language(['en', 'zh']);
+				$ld = new Language(['en', 'sv']);	
 				$language = $ld->detect($obj->title);
 				if (preg_match('/\p{Han}+/u', $obj->title))
 				{
@@ -375,7 +376,7 @@ function process_ris_key($key, $value, &$obj)
 		   }
 		   
 		   
-		   // print_r($obj->issued);
+		   //print_r($obj->issued);
 		   
 		   break;
 		   
@@ -386,26 +387,27 @@ function process_ris_key($key, $value, &$obj)
 				$obj->issued->{'date-parts'} = array();
 
 				$date = $value;
-
+				
 			   if (preg_match("/^[0-9]{4}$/", $date))
 			   {                
 					$obj->issued->{'date-parts'}[0] = array(
 							(Integer)$date
 						);         
 			   }	
-			   
+			   			   
 			   // e.g. 1961-62
 			   if (preg_match("/^([0-9]{2})([0-9]{2})-([0-9]{2})$/", $date, $m))
-			   {                
+			   {              
 					$obj->issued->{'date-parts'}[0] = array(
-							(Integer)($m[1] + $m[2])
+							(Integer)($m[1] . $m[2])
 						); 
 						
 					$obj->issued->{'date-parts'}[1] = array(
-							(Integer)($m[1] + $m[3])
+							(Integer)($m[1] . $m[3])
 						);         
 						        
 			   }
+			   
 			   
 			   // e.g. 1975-1976		   
 			   if (preg_match("/^([0-9]{4})-([0-9]{4})$/", $date, $m))
@@ -419,7 +421,6 @@ function process_ris_key($key, $value, &$obj)
 						);         
 						        
 			   }
-			   	   
 			}
 		   break;		   
 		   
