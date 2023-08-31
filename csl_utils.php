@@ -673,7 +673,7 @@ function csl_to_sql($csl, $table = "publications")
 	
 			case 'page':
 				// Airiti journals sometimes have extra (-\d+) if each article is paginated 1-n
-				if (preg_match('/(?<spage>S?\d+)-(?<epage>S?1\d+(-\d+)?)/', $v, $m)) 
+				if (preg_match('/(?<spage>S?\d+)-(?<epage>S?\d+(-\d+)?)/', $v, $m)) 
 				{
 					$keys[] = 'spage';
 					$values[] = '"' . $m['spage'] . '"';					
