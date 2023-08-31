@@ -375,9 +375,6 @@ function process_ris_key($key, $value, &$obj)
 		   		$obj->issued->{'date-parts'}[0] = explode('-', $date);
 		   }
 		   
-		   
-		   //print_r($obj->issued);
-		   
 		   break;
 		   
 		case 'Y1':
