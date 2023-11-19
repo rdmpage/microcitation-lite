@@ -30,7 +30,7 @@ $header_lookup = array();
 
 $filename = 'query.tsv';
 
-$filename = '/Users/rpage/Downloads/query-3.tsv';
+//$filename = '/Users/rpage/Downloads/query-3.tsv';
 $filename = '/Users/rpage/Downloads/query.tsv';
 //$filename = '/Users/rpage/Downloads/query-2.tsv';
 
@@ -76,7 +76,7 @@ while (!feof($file_handle))
 			// do something here
 			
 			// add Wikidata based on DOI
-			if (0)
+			if (1)
 			{				
 				if (isset($obj->doi))
 				{
@@ -92,6 +92,24 @@ while (!feof($file_handle))
 				}
 			}
 			
+			// add Wikidata based on CNKI
+			if (0)
+			{				
+				if (isset($obj->cnki))
+				{
+			
+					$sql = 'UPDATE publications SET wikidata="' 
+						. preg_replace('/https?:\/\/www.wikidata.org\/entity\//', '', $obj->work) . '"'
+						. ' WHERE cnki="' . $obj->cnki . '"'
+						. ' AND wikidata IS NULL'
+						. ';';
+					
+					echo $sql . "\n";
+			
+				}
+			}
+			
+			
 			if (0)
 			{
 				// Add Wikidata based on metadata match
@@ -101,6 +119,7 @@ while (!feof($file_handle))
 				 )
 				{
 					$issn = '0085-4417';
+					$issn = '0022-2062';
 									
 					$parts = preg_split('/[-|–]/u', $obj->pages);
 					
@@ -114,6 +133,12 @@ while (!feof($file_handle))
 						{
 							$sql .= ' AND epage="' . $parts[1] . '"';
 						}
+						else
+						{
+							$sql .= ' AND epage="' . $parts[0] . '"';						
+						}
+						
+						$sql .= ' AND title="' . str_replace("'", "''", $obj->title) . '"';
 						
 						$sql .=  ' AND wikidata IS NULL'
 						. ';';					
@@ -121,7 +146,7 @@ while (!feof($file_handle))
 				}
 			}		
 			
-			if (1)
+			if (0)
 			{
 				// Add records from Wikidata based on metadata match
 				

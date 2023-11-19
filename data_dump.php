@@ -47,7 +47,9 @@ $datadir = dirname(__FILE__) . '/data';
 $table = 'publications';
 
 $issns = array(
-	['0438-0479']
+//	['0438-0479'],
+//	['0453-1906'],
+	['0071-1268'],
 );
 
 
@@ -60,7 +62,7 @@ foreach ($issns as $issn)
 	
 	$sql = $sql = 'SELECT journal FROM ' . $table . ' WHERE issn IN (' . $quoted_issns . ') AND journal IS NOT NULL LIMIT 1';
 	
-	//echo $sql . "\n";
+	echo $sql . "\n";
 	
 	$data = do_query($sql);
 	

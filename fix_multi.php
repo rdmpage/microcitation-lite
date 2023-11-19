@@ -42,6 +42,8 @@ function do_query($sql)
 
 $sql = 'SELECT * FROM multilingual where guid like "https://www.lillo.org.ar%"';
 
+$sql = 'SELECT * FROM multilingual where guid like "10.18968/jhbl%"';
+
 $data = do_query($sql);
 
 $records = array();
@@ -56,10 +58,29 @@ foreach ($data as $obj)
 }
 
 
-$ld = new Language(['en', 'la', 'es', 'de']);	
+$ld = new Language(['en', 'la', 'es', 'de', 'ja']);	
 
 foreach ($records as $guid => $record)
 {
+	print_r($record);
+	
+	foreach ($record as $language => $value)
+	{
+		$lan = $ld->detect($value);
+		
+		if (preg_match('/\p{Han}+/u', $value))
+		{
+			$language = 'ja';
+		}
+		
+		if ($lan != $language)
+		{
+			echo "$lan != $language error\n";
+		}
+	
+	}
+
+/*
 	if (count($record) == 1)
 	{
 		print_r($record);
@@ -76,9 +97,7 @@ foreach ($records as $guid => $record)
 			echo 'REPLACE INTO multilingual(guid, `key`, language, value) VALUES("' . $guid . '","title","' . $language . '","' . str_replace('"', '""', $value) . '");' . "\n";
 		
 		}
-		
-		
-
 	}
+*/
 }
 ?>

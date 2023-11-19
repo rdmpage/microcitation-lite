@@ -121,6 +121,27 @@ $sql = 'SELECT * FROM publications_doi WHERE pdf IN ("http://www.mycosphere.org/
 
 $sql = "SELECT * FROM publications WHERE issn='0071-1268' and pdf is not null and internetarchive is null";
 
+$sql = "SELECT * FROM publications WHERE issn='2665-0347' and pdf is not null and internetarchive is null";
+
+$sql = "select * from publications where internetarchive in ('anartia-33660-35463','anartia-37320-40718','anartia-37311-40702','anartia-37310-40700','anartia-37312-40704','anartia-37313-40706','anartia-37314-40708','anartia-37315-40710','anartia-37316-40712','anartia-37319-40716','anartia-40509-46102','anartia-40510-46103','anartia-40511-46105','anartia-40513-46109','anartia-40514-46111','anartia-40515-46113','anartia-40516-46115')";
+
+$sql = 'select * from publications where internetarchive in ("anartia-40512-46107","anartia-37308-40698")';
+
+$sql = "select * from publications_doi WHERE issn='0069-2379' and pdf is not null";
+$sql = "select * from publications WHERE issn='0069-2379' and year < 2007 and pdf is not null";
+
+// Austrobaileya
+$sql = "select * from publications WHERE issn='0155-4131' and volume=11";
+
+// Revista Pittieria
+$sql = "select * from publications WHERE issn='0554-2111' and pdf IS NOT NULL";
+
+$sql = "SELECT * FROM publications WHERE issn='2581-8686' and year > 1962 and pdf IS NOT NULL";
+
+$sql = "SELECT * FROM publications WHERE issn='0753-4973' AND volume IN (3,4)";
+
+$sql .= ' ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED)';
+
 
 if (0)
 {
@@ -133,6 +154,26 @@ if (0)
 
 	$sql = "select * from publications where issn='0368-1068' and authors like '%Moore%'";
 	//$sql = "select * from publications where issn='0368-1068' and title like '%blat%'";
+	
+	$sql = "select * from publications 
+	WHERE issn='0368-1068' 
+	AND printf('%d', spage) = spage
+	AND year BETWEEN 1846 AND 1870
+	AND authors IS NOT NULL
+	AND authors != 'The Natural History Secretary'
+	AND authors != 'The Secretary'
+	AND authors != 'The Secretaries'
+	ORDER BY volume, issue, CAST(spage AS SIGNED)";
+	
+	// AND volume IN ('XIII','XIV','XV')
+	
+	$sql = "select * from publications 
+	WHERE issn='0368-1068' 
+	AND printf('%d', spage) = spage
+	AND year BETWEEN 1902 AND 1908
+	ORDER BY volume, issue, CAST(spage AS SIGNED)";
+	
+	
 }
 
 

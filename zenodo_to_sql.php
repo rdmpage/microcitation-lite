@@ -40,6 +40,8 @@ function get($url, $content_type = '')
 $journal = "Halteres";
 $journal = "ANNALS OF THE UPPER SILESIAN MUSEUM IN BYTOM, ENTOMOLOGY";
 
+$journal = "The Taxonomic Report";
+
 $parameters = array(
 	'page' 	=> 1,
 	"size"	=> 200,

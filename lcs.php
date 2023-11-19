@@ -43,8 +43,8 @@ class LongestCommonSequence
 	// from http://en.wikipedia.org/wiki/Longest_common_subsequence_problem
 	function compare()
 	{
-		$m = strlen($this->X);
-		$n = strlen($this->Y);
+		$m = mb_strlen($this->X);
+		$n = mb_strlen($this->Y);
 	
 		for ($i = 0; $i <= $m; $i++)
 		{
@@ -59,7 +59,10 @@ class LongestCommonSequence
 		{
 			for ($j = 1; $j <= $n; $j++)
 			{
-				if ($this->X[$i-1] == $this->Y[$j-1])
+				$charX = mb_substr($this->X, $i-1, 1, "UTF-8");
+				$charY = mb_substr($this->Y, $j-1, 1, "UTF-8");
+			
+				if ($charX  == $charY)
 				{
 					$this->C[$i][$j] = $this->C[$i-1][$j-1]+1;
 				}
@@ -75,8 +78,8 @@ class LongestCommonSequence
 	function score()
 	{
 		$this->compare();
-		$this->printDiff($this->C, $this->X, $this->Y, strlen($this->X), strlen($this->Y));
-		return $this->C[strlen($this->X)][strlen($this->Y)];
+		$this->printDiff($this->C, $this->X, $this->Y, mb_strlen($this->X), mb_strlen($this->Y));
+		return $this->C[mb_strlen($this->X)][mb_strlen($this->Y)];
 	}
 	
 	//----------------------------------------------------------------------------------------------
@@ -84,7 +87,7 @@ class LongestCommonSequence
 	{
 		$length_cs = $this->score();
 		
-		$d = (strlen($this->X) + strlen($this->Y) - (2 * $length_cs))/(strlen($this->X) + strlen($this->Y));
+		$d = (mb_strlen($this->X) + mb_strlen($this->Y) - (2 * $length_cs))/(mb_strlen($this->X) + mb_strlen($this->Y));
 		return $d;
 	}
 	
@@ -135,14 +138,17 @@ class LongestCommonSequence
 		$this->left = '';
 		$this->bars = '';
 		$this->right = '';
+		
+		$charX = mb_substr($X, $i-1, 1, "UTF-8");
+		$charY = mb_substr($Y, $j-1, 1, "UTF-8");
 	
-		if (($i > 0) and ($j > 0) and ($X[$i-1] == $Y[$j-1]))
+		if (($i > 0) and ($j > 0) and ($charX == $charY))
 		{
 			$this->alignment($C, $X, $Y, $i-1, $j-1);
 			
-			$this->left .= $X[$i-1];
+			$this->left .= $charX;
 			$this->bars .= '|';
-			$this->right .= $Y[$j-1];
+			$this->right .= $charY;
 		   }
 		else
 		{
@@ -152,7 +158,7 @@ class LongestCommonSequence
 	
 				$this->left .= '-';
 				$this->bars .= ' ';
-				$this->right .= $Y[$j-1];
+				$this->right .= $charY;
 			}
 			else 
 			{
@@ -160,7 +166,7 @@ class LongestCommonSequence
 				{
 					$this->alignment($C, $X, $Y, $i-1, $j);
 					
-					$this->left .= $X[$i-1];
+					$this->left .= $charX;
 					$this->bars .= ' ';
 					$this->right .= '-';
 				}
@@ -172,7 +178,7 @@ class LongestCommonSequence
 	//----------------------------------------------------------------------------------------------
 	function get_alignment()
 	{
-		$this->alignment($this->C, $this->X, $this->Y, strlen($this->X), strlen($this->Y));
+		$this->alignment($this->C, $this->X, $this->Y, mb_strlen($this->X), mb_strlen($this->Y));
 	}	
 	
 	//----------------------------------------------------------------------------------------------
@@ -203,8 +209,8 @@ function LongestCommonSubstring($S, $T, &$str)
 {
 	$str = '';
 	$ret = array();
-	$m = strlen($S);
-	$n = strlen($T);
+	$m = mb_strlen($S);
+	$n = mb_strlen($T);
 	$L = array();
 	for ($i = 0; $i < $m; $i++)
 	{
@@ -220,7 +226,10 @@ function LongestCommonSubstring($S, $T, &$str)
 	{
 		for ($j = 0; $j < $n; $j++)
 		{
-			if ($S[$i] == $T[$j])
+			$charS = mb_substr($S, $i, 1, "UTF-8");
+			$charT = mb_substr($T, $j, 1, "UTF-8");
+		
+			if ($charS == $charT)
 			{
 				if ($i == 0 || $j == 0)
 				{
@@ -237,7 +246,7 @@ function LongestCommonSubstring($S, $T, &$str)
 				}
 				if ($L[$i][$j] == $z)
 				{
-					$str = substr($S, $i - $z + 1, $z);
+					$str = mb_substr($S, $i - $z + 1, $z);
 					array_push($ret, $str);
 				}
 			}

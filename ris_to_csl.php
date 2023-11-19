@@ -224,18 +224,43 @@ function process_ris_key($key, $value, &$obj)
 					$obj->multi->_key->{'title'} = new stdclass;					
 				}
 				
-				// store exiting title (language detection may be a bit ropey)
+				// store existing title (language detection may be a bit ropey)
 								
 				//$ld = new Language(['en', 'zh']);
-				$ld = new Language(['en', 'sv']);	
+				//$ld = new Language(['en', 'es']);
+				$ld = new Language(['en', 'pt', 'es']);	
 				$language = $ld->detect($obj->title);
 				if (preg_match('/\p{Han}+/u', $obj->title))
 				{
 					$language = 'zh';
 				}
 				
+				if ($language == 'es')
+				{
+					if (preg_match('/[çāãêáâóôé]/iu', $obj->title))
+					{
+						$language = 'pt';
+					}
+					
+					if (preg_match('/( o | dos |Notas | de | sobre | e | da |Sobre | um | ume )/iu', $obj->title))
+					{
+						$language = 'pt';
+					}
+					
+					// hack
+					if (0)
+					{
+						echo "-- Hack for pt\n";
+						$language = 'pt';
+					}
+						
+				}
+				
 				// in some cases assume English
 				$obj->multi->_key->{'title'}->{$language} = $obj->title;	
+				
+				//print_r($obj->multi->_key->{'title'});	
+				
 				
 				// store other title		
 				$language = $ld->detect($value);
@@ -244,8 +269,30 @@ function process_ris_key($key, $value, &$obj)
 					$language = 'zh';
 				}
 				
+				if ($language == 'es')
+				{
+					if (preg_match('/[çāãêáâóôé]/iu', $value))
+					{
+						$language = 'pt';
+					}
+					
+					if (preg_match('/( o | dos |Notas | de | sobre | e | da |Sobre | um | ume )/iu', $value))
+					{
+						$language = 'pt';
+					}
+					
+					// hack
+					if (0)
+					{
+						echo "-- Hack for pt\n";
+						$language = 'pt';
+					}
+					
+				}
 								
-				$obj->multi->_key->{'title'}->{$language} = $value;			
+				$obj->multi->_key->{'title'}->{$language} = $value;		
+				
+				//print_r($obj->multi->_key->{'title'});	
 			}
 			break;
 			
@@ -297,7 +344,10 @@ function process_ris_key($key, $value, &$obj)
 		case 'EP':
 			if (isset($obj->page))
 			{
-				$obj->page  .= '-' . $value;
+				if ($obj->page !=  $value)
+				{
+					$obj->page  .= '-' . $value;
+				}
 			}
 			else
 			{
