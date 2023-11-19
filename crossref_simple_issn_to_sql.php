@@ -186,67 +186,84 @@ $issns = array(
 );
 
 $start 	= 1880;
-$start 	= 1891;
 $end 	= 1923;
 
-$start 	= 1916;
-$end 	= 1916;
+//$start 	= 1916;
+//$end 	= 1916;
+
+// ZooKeys
+$issns = array(
+'1313-2970',
+);
+$start 	= 2008;
+$end 	= 2023;
+;
 
 
 //----------------------------------------------------------------------------------------
 
-$limit = 1000;
-
 $count = 1;
+
+$limit = 1000;
 
 foreach ($issns as $issn)
 {
 
 	for ($year = $start; $year <= $end; $year++)
 	{
-
-		$url = 'https://api.crossref.org/works?filter=issn:' . $issn . ',from-pub-date:' . $year  . ',until-pub-date:' . ($year + 1);
-		
-		$url .= '&rows=' . $limit;
-		
-		echo "-- $url\n";
-		
-		$json = get($url);
-
-		//echo $json;
-
-		$obj = json_decode($json);
-
-		//print_r($obj);
 	
-		foreach ($obj->message->items as $item)
+		$done = false;
+		
+		$cursor = '*';
+		$result_count = 0;
+		
+		while (!$done)
 		{
-			$doi = $item->DOI;
 
-			// DOI prefix
-			$parts = explode('/', $doi);
-			$prefix = $parts[0];
-	
-			// Agency lookup
-			$agency = doi_to_agency($prefix_to_agency, $prefix, $doi);
-	
-			$doi = strtolower($doi);
+			$url = 'https://api.crossref.org/works?filter=issn:' . $issn . ',from-pub-date:' . $year  . ',until-pub-date:' . ($year + 1);
+			$url .= '&cursor=' . $cursor;
+		
+			echo "-- $url\n";
+		
+			$json = get($url);
 
-			$url = 'https://doi.org/' . $doi;	
-			$json = get($url, 'application/vnd.citationstyles.csl+json');
+			//echo $json;
+			
+			//exit();
+
 			$obj = json_decode($json);
-	
-			if ($obj)	
+			
+			$cursor = $obj->message->{'next-cursor'};
+			
+			echo "-- $cursor\n";
+			
+			$result_count += count($obj->message->items);
+			
+			echo "-- $result_count\n";
+			
+			if ($result_count >= $obj->message->{'total-results'})
 			{
-				if ($agency != '')
-				{
-					$obj->doi_agency = $agency;
-				}
+				$done = true;
+			}			
+
+			//print_r($obj);
+		
+			foreach ($obj->message->items as $item)
+			{
+				$doi = $item->DOI;
+
+				// DOI prefix
+				$parts = explode('/', $doi);
+				$prefix = $parts[0];
 	
-				$sql = csl_to_sql($obj, 'publications_doi');		
+				// Agency lookup
+				$agency = doi_to_agency($prefix_to_agency, $prefix, $doi);
+		
+				$sql = csl_to_sql($item, 'publications_doi');		
 				echo $sql . "\n";
-			}
 	
+			}
+		
 			// Give server a break every 10 items
 			if (($count++ % 5) == 0)
 			{
@@ -254,7 +271,9 @@ foreach ($issns as $issn)
 				echo "\n-- ...sleeping for " . round(($rand / 1000000),2) . ' seconds' . "\n\n";
 				usleep($rand);
 			}
-		}	
+			
+		}
+		
 	}
 }
 

@@ -153,6 +153,33 @@ $sql = "SELECT * FROM publications WHERE issn='0084-800X' and volume is not null
 
 $sql = "SELECT * FROM publications WHERE issn='0373-2975' AND volume != 68 and wikidata IS NULL";
 
+$sql = "SELECT * FROM publications WHERE issn='2665-0347' and flag=1";
+
+$sql = "SELECT * FROM publications WHERE guid='https://produccioncientificaluz.org/index.php/anartia/article/view/40512'";
+
+$sql = "select * from publications WHERE issn='2307-5031' and flag=1";
+
+$sql = "select * from publications where issn='0013-886X' AND year BETWEEN 1950 AND 1960 AND pdf IS NOT NULL AND wikidata is null";
+
+$sql = "SELECT * FROM publications WHERE issn='0155-4131' AND wikidata IS NULL";
+$sql = "SELECT * FROM publications WHERE issn='0069-2379' AND wikidata IS NULL";
+
+$sql = "SELECT * FROM publications WHERE journal='Münchner Koleopterologische Zeitschrift' AND volume=2 and authors IS NOT NULL";
+
+
+$sql = "SELECT * FROM publications WHERE issn='0453-1906' AND wikidata IS NULL";
+$sql = "SELECT * FROM publications_doi WHERE issn='0453-1906' AND wikidata IS NULL and authors IS NOT NULL";
+
+$sql = "SELECT * FROM publications WHERE issn='0253-116X' AND wikidata IS NULL and guid like '%www.zobodat.at%'";
+
+$sql = "SELECT * FROM publications WHERE issn='0554-2111' AND authors != '- -'";
+
+$sql = "SELECT * FROM publications WHERE issn='2581-8686' and year > 1962";
+
+$sql = "SELECT * FROM publications WHERE issn='0753-4973'";
+
+$sql = "SELECT * FROM publications WHERE issn='0368-8720'";
+
 $sql .= ' ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED)';
 
 $data = do_query($sql);

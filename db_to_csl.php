@@ -139,6 +139,11 @@ function data_to_csl($obj)
 				{
 					$csl->JSTOR = $m['id'];
 				}
+				
+				if (preg_match('/dl.ndl.go.jp\/pid\/(?<id>\d+)/', $csl->URL, $m))
+				{
+					$csl->NDL = $m['id'];
+				}
 
 				break;
 

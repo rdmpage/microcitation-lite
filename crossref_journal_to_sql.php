@@ -176,6 +176,37 @@ $id = 126005;	// Smithsonian Contributions to Botany
 $id = 379736;	// Ecologica Montenegrina
 $id = 73440;	// Archives of Biological Sciences
 $id = 6032;		// Edinburgh Journal of Botany
+$id = 465517; 	// Metamorphosis
+$id = 366717;	// Amurian Zoological Journal
+
+$id = 85709;	// Ceylon Journal of Science
+$id = 300655;	// Ceylon Journal of Science
+$id = 196026;	// Cunninghamia
+$id = 476223;	// SHILAP Revista de lepidopterología
+$id = 265508; 	// Fragmenta Entomologica (no longer with CrossRef)
+$id = 300777; 	// Acarina
+
+$id = 306560; 	// Zoological Research 2017-onwards
+$id = 79061;	// Zoological Research
+
+$id = 87512;	// Gayana Botánica
+$id = 82626;	// Journal of Systematics and Evolution
+
+$id = 76599; 	// ZooKeys - too big, need to filter figures, etc :O
+
+$id = 251369;	// Arctoa
+
+$id = 2336;		// Cryptogamie Bryologie
+
+$id = 423343;	// Zoo Indonesia
+$id = 45763;	// Revista do Instituto de Medicina Tropical de São Paulo
+$id = 45699;	// Papéis Avulsos de Zoologia
+
+$id = 327691;	// Herpetological Journal
+$id = 85445;	// Philippine Journal of Systematic Biology
+//$id = 367377;	// Philippine Journal of Systematic Biology
+
+$id = 216386;	// Annales de la Société entomologique de France
 
 $url = 'http://data.crossref.org/depositorreport?pubid=J' . $id;
 

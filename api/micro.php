@@ -147,12 +147,19 @@ if (preg_match('/(?<spage>\d+)-(?<epage>\d+)/', $parameters['page'], $m))
 }
 else
 {
+	// $jstorlike is true if we have only a lower bound on the page numbers,
+	// otherwise we seek to match the spanning range
 	$jstorlike = false;
 	
 	if (isset($parameters['issn']) && $parameters['issn'] == '0374-6313')
 	{
 		$jstorlike = true;
 	}
+	if (isset($parameters['issn']) && $parameters['issn'] == '1420-2298')
+	{
+		$jstorlike = true;
+	}
+	
 
 	if ($jstorlike)
 	{

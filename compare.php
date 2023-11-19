@@ -56,8 +56,10 @@ function normalise_text($text)
 	$text = unaccent($text);
 	
 	// remove punctuation
-	//$text = preg_replace('/[' . PUNCTUATION_CHARS . ']+/u', '', $text);
-	$text = preg_replace('/[^a-z0-9 ]/i', '', $text);
+	$text = preg_replace('/[' . PUNCTUATION_CHARS . ']+/u', '', $text);
+	
+	// don't use next line as it deletes anything that isn't ASCII!
+	//$text = preg_replace('/[^a-z0-9 ]/iu', '', $text);
 	
 	// lowercase
 	$text = mb_convert_case($text, MB_CASE_LOWER);
@@ -102,6 +104,10 @@ function compare_common_subsequence($text1, $text2, $debug = false)
 {
 	$text1 = normalise_text($text1);
 	$text2 = normalise_text($text2);
+	
+	// echo "$text1\n";
+	// echo "$text2\n";
+	
 
 	$lcs = new LongestCommonSequence($text1, $text2);
 
@@ -112,16 +118,24 @@ function compare_common_subsequence($text1, $text2, $debug = false)
 		echo $lcs->show_alignment();
 	}
 	
-	$length1 = strlen($text1);
-	$length2 = strlen($text2);
+	$length1 = mb_strlen($text1);
+	$length2 = mb_strlen($text2);
 	
 	$result = new stdclass;
 	$result->strings = [$text1, $text2];
 	$result->name = 'subsequence';
 	$result->value = $d;
 	$result->lengths = [$length1, $length2];
-	$result->normalised = [$d / min($length1, $length2), $d / max($length1, $length2)];
-	sort($result->normalised);
+	
+	if (min($length1, $length2) == 0)
+	{
+		$result->normalised = [0,0];
+	}
+	else
+	{
+		$result->normalised = [$d / min($length1, $length2), $d / max($length1, $length2)];
+		sort($result->normalised);
+	}
 	
 	return $result;
 }

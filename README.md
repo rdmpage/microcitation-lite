@@ -67,6 +67,11 @@ Complicated journal with Chinese and English versions, sometimes in parallel. Da
 | Mycosystema | 1007-3515 | 1997–2003 | Q52380050 | |
 | Mycosystema | 1672-6472 | 2004- | Q15760108 | |
 
+## Science
+
+There has been an epic fuck up with DOIs for this journal, massive duplication, 2-3 DOIs for some articles 9typically those on the same page). Some filtering done, everything with `flag=1` in the database is likely a bad DOI. See https://community.crossref.org/t/more-multiple-doi-madness/4090
+
+There is a view with a clean(ish) list.
 
 ## Get PDFs
 

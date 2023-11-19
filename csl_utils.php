@@ -565,19 +565,29 @@ function csl_to_sql($csl, $table = "publications")
 				break;
 
 			case 'title':
-				// handle case whwere it might be an array
-				if (is_array($v))
+				// handle case where it might be an array
+				
+				$title = $v;
+				if (is_array($title))
 				{
-					if (count($v) > 0)
+					if (count($title) > 0)
 					{
-						$keys[] = 'title';
-						$values[] = '"' . str_replace('"', '""', $v[0]) . '"';					
+						$title = $title[0];
 					}
-				}								
-				else 
+					else
+					{
+						$title = '';
+					}
+				}
+				
+				// clean
+				$title = preg_replace('/\R/u', ' ', $title);
+				$title = preg_replace('/\s\s+/u', ' ', $title);
+				
+				if ($title != '')
 				{
 					$keys[] = 'title';
-					$values[] = '"' . str_replace('"', '""', $v) . '"';	
+					$values[] = '"' . str_replace('"', '""', $title) . '"';	
 				}
 				break;
 				
@@ -739,6 +749,14 @@ function csl_to_sql($csl, $table = "publications")
 						$pdf = $link->URL;	
 					}
 					
+					// XML
+					if ($link->{'content-type'} == 'application/xml')
+					{					
+						$keys[] = 'xml';
+						$values[] = '"' . $link->URL . '"';							
+					}
+					
+					
 				}					
 				break;
 				
@@ -774,6 +792,9 @@ function csl_to_sql($csl, $table = "publications")
 
 	$keys[] = 'json';
 	$values[] = "'" . $json . "'" ;
+	
+	$sql = '';
+	
 	
 	if (1)
 	{	
