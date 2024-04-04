@@ -46,6 +46,7 @@ function get($url, $content_type = '')
 //----------------------------------------------------------------------------------------
 
 $publisher = "Société Française d'Ichtyologie";
+$publisher = "Senckenberg Gesellschaft Für Naturforschung";
 
 $issn = '2643-4776';
 
@@ -57,16 +58,22 @@ $dois = array();
 
 while (!$done)
 {
-	// publisher
-	$url = 'https://api.datacite.org/dois?' . urlencode('page[number]') . '=' . $page_number
-	    . '&' . urlencode('page[size]') . '=' . $page_size
-		. '&query=' . urlencode('publisher:' . $publisher);
-		
-	// issn
-	$url = 'https://api.datacite.org/dois?' . urlencode('page[number]') . '=' . $page_number
-	    . '&' . urlencode('page[size]') . '=' . $page_size
-		. '&query=' . urlencode('relatedIdentifiers.relatedIdentifier:' . $issn);		
-		
+	if (1)
+	{
+		// publisher
+		$url = 'https://api.datacite.org/dois?' . urlencode('page[number]') . '=' . $page_number
+			. '&' . urlencode('page[size]') . '=' . $page_size
+			. '&query=' . urlencode('publisher:' . $publisher);
+	}
+	
+	if (0)		
+	{
+		// issn
+		$url = 'https://api.datacite.org/dois?' . urlencode('page[number]') . '=' . $page_number
+			. '&' . urlencode('page[size]') . '=' . $page_size
+			. '&query=' . urlencode('relatedIdentifiers.relatedIdentifier:' . $issn);		
+	}
+			
 	$json = get($url);
 	
 	$obj = json_decode($json);

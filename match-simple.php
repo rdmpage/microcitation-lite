@@ -5,6 +5,14 @@
 
 // Simplest TSV file is guid, title, year
 
+/*
+example SQL
+
+SELECT guid, title, volume, year, spage, epage, doi FROM publications WKERE issn="XXXX-XXXX";
+
+
+*/
+
 
 require_once(dirname(__FILE__) . '/compare.php');
 
@@ -82,6 +90,9 @@ $two = get_data('two.tsv');
 $verbose = false;
 $verbose = true;
 
+$missing_one = array();
+$missing_two = array();
+
 foreach ($one as $year => $articles)
 {
 	if (isset($one[$year]) && isset($two[$year]))
@@ -93,6 +104,7 @@ foreach ($one as $year => $articles)
 		
 		$k1 = array();
 		$k2 = array();
+		
 
 		foreach ($one[$year] as $o1)
 		{
@@ -116,6 +128,10 @@ foreach ($one as $year => $articles)
 		$m = count($k1);
 		$n = count($k2);
 		
+		$k1_list = range(0, $m-1);
+		$k2_list = range(0, $n-1);
+		
+		
 		//print_r($k1);
 		//print_r($k2);
 		
@@ -132,12 +148,18 @@ foreach ($one as $year => $articles)
 				$text1 = $k1[$i]->title;
 				$text2 = $k2[$j]->title;
 				
+				
+				if (preg_match('/^(.*) \/ (.*)$/', $text1, $matches))
+				{
+					$text1 = $matches[1];
+				}
+				
+				
 				//echo "$text1\n";
 				//echo "$text2\n";
 				
 				$result = compare_common_subsequence($text1, $text2);
 				
-				//print_r($result);
 				
 				if ($result->normalised[1] > 0.95)
 				{
@@ -247,7 +269,7 @@ foreach ($one as $year => $articles)
 				}
 				
 				
-				if (1)
+				if (0)
 				{
 					//print_r($k1[$i]);
 					//print_r($k2[$j]);
@@ -259,8 +281,7 @@ foreach ($one as $year => $articles)
 					if ($go)
 					{
 						$go = $k1[$i]->volume == $k2[$j]->volume;
-					}
-					
+					}					
 					
 					if ($go)
 					{
@@ -269,6 +290,7 @@ foreach ($one as $year => $articles)
 							$spage1 = $k1[$i]->spage;
 							$epage1 = $k1[$i]->epage;
 					
+							/*
 							$parts = preg_split('/[-|–]/u', $k2[$j]->pages);
 							if (count($parts) == 2)
 							{
@@ -280,9 +302,18 @@ foreach ($one as $year => $articles)
 								$spage2 = $k2[$j]->pages;
 								$epage2 = $spage2;
 							}
+							*/
+							
+							if (isset($k2[$j]->spage) && isset($k2[$j]->epage))
+							{
+								$spage2 = $k2[$j]->spage;
+								$epage2 = $k2[$j]->epage;
+
+								//echo "$spage1 $spage2\n";
+								//echo "$epage1 $epage2\n";
 						
-						
-							$go = (($spage1 == $spage2) && ($epage1 == $epage2));
+								$go = (($spage1 == $spage2) && ($epage1 == $epage2));
+							}
 						}
 						else
 						{
@@ -294,17 +325,189 @@ foreach ($one as $year => $articles)
 				
 					if ($go)
 					{ 
+						echo "-- go\n";
+						
+						if (isset($k2[$j]->wikidata))
+						{
+							echo 'UPDATE publications SET wikidata="' . str_replace('http://www.wikidata.org/entity/', '', $k2[$j]->wikidata) . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+						}
+
+						if (isset($k1[$i]->wikidata))
+						{
+							echo 'UPDATE publications SET wikidata="' . str_replace('http://www.wikidata.org/entity/', '', $k1[$i]->wikidata) . '" WHERE guid="' . $k2[$j]->guid . '";' . "\n";
+						}
+
+						if (isset($k1[$i]->doi) && !isset($k2[$j]->doi))
+						{
+							echo 'UPDATE rdmp_reference SET doi="' . $k1[$i]->doi . '" WHERE reference_id="' . $k2[$j]->guid . '";' . "\n";
+						}
+						
+					}
+				
+				}
+				
+				if (0)
+				{
+					//print_r($k1[$i]);
+					//print_r($k2[$j]);
+				
+				
+					$go = true;
+					
+					// sanity check
+					if ($go)
+					{
+						$go = $k1[$i]->volume == $k2[$j]->volume;
+					}					
+					
+					if ($go)
+					{
+						if (isset($k1[$i]->wikidata))
+						{
+							echo 'UPDATE publications SET wikidata="' . $k1[$i]->wikidata . '" WHERE guid="' . $k2[$j]->guid . '";' . "\n";
+						}						
+					}
+				
+				}	
+				
+				// CNKI and not CNKI	
+				if (0)
+				{
+					//print_r($k1[$i]);
+					//print_r($k2[$j]);
+				
+				
+					$go = true;
+					
+					// sanity check
+					if ($go)
+					{
+						if (isset($k1[$i]->issue) && isset($k2[$j]->issue))
+						{
+							$go = $k1[$i]->issue == $k2[$j]->issue;
+						}
+					}					
+					
+					if ($go)
+					{
+						if (isset($k1[$i]->spage) && isset($k2[$j]->spage))
+						{
+							$go = $k1[$i]->spage == $k2[$j]->spage;
+						}
+					}
+				
+					if ($go)
+					{ 
+						// record match
+						unset($k1_list[$i]);
+						unset($k2_list[$j]);
+					
+					
+					
+						echo "-- go\n";
+						
+						/*
 						if (isset($k2[$j]->wikidata))
 						{
 							echo 'UPDATE publications_doi SET wikidata="' . str_replace('http://www.wikidata.org/entity/', '', $k2[$j]->wikidata) . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
 						}
+						*/
+
+						/*
+						if (isset($k1[$i]->wikidata))
+						{
+							echo 'UPDATE publications SET wikidata="' . str_replace('http://www.wikidata.org/entity/', '', $k1[$i]->wikidata) . '" WHERE guid="' . $k2[$j]->guid . '";' . "\n";
+						}
+
+						if (isset($k1[$i]->doi) && !isset($k2[$j]->doi))
+						{
+							echo 'UPDATE rdmp_reference SET doi="' . $k1[$i]->doi . '" WHERE reference_id="' . $k2[$j]->guid . '";' . "\n";
+						}
+						*/
+						
+						if (isset($k1[$i]->doi) && !isset($k2[$j]->doi))
+						{
+							echo 'UPDATE rdmp_reference SET doi="' . $k1[$i]->doi . '" WHERE reference_id="' . $k2[$j]->guid . '";' . "\n";
+						}
+						
+						
 					}
 				
 				}
-			
+				
+				
+				// BHL DOIs and non BHL DOIs	
+				if (1)
+				{
+					//print_r($k1[$i]);
+					//print_r($k2[$j]);
+				
+					$go = true;
+					
+					// sanity check
+					if ($go)
+					{
+						if (isset($k1[$i]->volume) && isset($k2[$j]->volume))
+						{
+							$go = $k1[$i]->volume == $k2[$j]->volume;
+						}
+					}					
+					
+					/*
+					if ($go)
+					{
+						if (isset($k1[$i]->spage) && isset($k2[$j]->spage))
+						{
+							$go = $k1[$i]->spage == $k2[$j]->spage;
+						}
+					}
+					*/
+				
+					if ($go)
+					{ 
+						// record match
+						unset($k1_list[$i]);
+						unset($k2_list[$j]);
+					
+						echo "-- go\n";
+						
+						if (isset($k1[$i]->doi) && isset($k2[$j]->doi))
+						{
+							echo 'UPDATE publications_doi SET article_number="' . $k2[$j]->doi . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+						}
+
+						if (isset($k1[$i]->wikidata) && !isset($k2[$j]->wikidata))
+						{
+							echo 'UPDATE publications SET wikidata="' . $k1[$i]->wikidata . '" WHERE guid="' . $k2[$j]->guid . '";' . "\n";
+						}
+						
+						
+					}
+				
+				}
+				
+				
 			}
+		}
+		
+		//print_r($k1_list);
+		//print_r($k2_list);
+
+		foreach ($k1_list as $i)
+		{
+			$missing_one[] = $k1[$i]->guid;
+		}
+		
+		foreach ($k2_list as $j)
+		{
+			$missing_two[] = $k2[$j]->guid;
 		}
 	}
 }
+
+
+print_r($missing_one);
+print_r($missing_two);
+
 
 ?>

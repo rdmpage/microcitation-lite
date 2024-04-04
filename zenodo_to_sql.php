@@ -42,8 +42,14 @@ $journal = "ANNALS OF THE UPPER SILESIAN MUSEUM IN BYTOM, ENTOMOLOGY";
 
 $journal = "The Taxonomic Report";
 
+$journal = "Iberus";
+
+$page = 1;
+$page = 2;
+$page = 3;
+
 $parameters = array(
-	'page' 	=> 1,
+	'page' 	=> $page,
 	"size"	=> 200,
 	"q"		=> 'journal.title:"' . $journal . '"'
 );
@@ -17941,6 +17947,12 @@ foreach ($obj->hits->hits as $hit)
 			if (isset($hit->metadata->journal->volume))
 			{
 				$csl->volume = $hit->metadata->journal->volume;
+				
+				if (preg_match('/(?<volume>\d+)\((?<issue>[^\)]+)\)/', $csl->volume, $m))
+				{
+					$csl->volume  = $m['volume'];
+					$csl->issue   = $m['issue'];
+				}
 			}
 			if (isset($hit->metadata->journal->title))
 			{

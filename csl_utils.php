@@ -64,6 +64,8 @@ function csl_to_ris($csl)
 				break;
 				
 			case 'title':
+				$ris_values[$csl_ris_map[$k]][] = $v;	
+				break;
 			case 'container-title':
 			case 'volume':
 			case 'issue':
@@ -656,6 +658,8 @@ function csl_to_sql($csl, $table = "publications")
 				$keys[] = 'year';
 				$values[] = '"' . $v->{'date-parts'}[0][0] . '"';		
 				
+				//print_r($v->{'date-parts'})
+				
 				$date = array();
 				
 				if (count($v->{'date-parts'}[0]) > 0) $date[] = $v->{'date-parts'}[0][0];
@@ -796,7 +800,7 @@ function csl_to_sql($csl, $table = "publications")
 	$sql = '';
 	
 	
-	if (1)
+	if (0)
 	{	
 		$sql = 'REPLACE INTO ' . $table . '(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
 	}

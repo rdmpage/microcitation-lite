@@ -63,8 +63,17 @@ function get_html_from_wanfang($wanfang_id)
 	{
 		$count++;
 		
-		$html = get($url, "text/html");	
-		file_put_contents($wanfang_filename, $html);	
+		$command = "'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'"
+			. "  --headless --disable-gpu --dump-dom"
+			. " --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36\""
+			. " '" . $url . "'"
+			. ' > ' . $wanfang_filename;
+
+		echo $command . "\n";
+
+		//exit();
+
+		system($command);
 	}
 		
 	$html = file_get_contents($wanfang_filename);
@@ -113,6 +122,10 @@ for ($year = 1998; $year <= 2000; $year++)
 
 $ids=array(
 'zxxb200401004'
+);
+
+$ids=array(
+'zxxb202302001',
 );
 
 
