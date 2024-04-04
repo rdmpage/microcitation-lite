@@ -21,7 +21,18 @@ function data_to_csl($obj)
 				
 			case 'title':
 				$v = html_entity_decode($v, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+				
+				if (0)
+				{
+					// ensure spaces around <i> tags before we strip them so we avoid
+					// running words together
+					$v = preg_replace('/<i>/i', ' <i> ', $v);
+					$v = preg_replace('/<\/i>/i', ' </i> ', $v);
+				}
+				
 				$v = strip_tags($v);
+				$v = preg_replace('/\s\s+/i', ' ', $v);
+				
 				$csl->{$k} = $v;
 				$csl->{$k} = preg_replace('/\.$/', '', $csl->{$k});
 				break;				
@@ -143,6 +154,11 @@ function data_to_csl($obj)
 				if (preg_match('/dl.ndl.go.jp\/pid\/(?<id>\d+)/', $csl->URL, $m))
 				{
 					$csl->NDL = $m['id'];
+				}
+
+				if (preg_match('/id.ndl.go.jp\/bib\/(?<id>\d+)/', $csl->URL, $m))
+				{
+					$csl->NDLBIB = $m['id'];
 				}
 
 				break;

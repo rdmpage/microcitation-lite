@@ -180,7 +180,16 @@ $sql = "SELECT * FROM publications WHERE issn='0753-4973'";
 
 $sql = "SELECT * FROM publications WHERE issn='0368-8720'";
 
-$sql .= ' ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED)';
+$sql = "SELECT * FROM publications WHERE guid='10.3321/j.issn:1000-7091.1989.z1.023'";
+
+//$sql = "SELECT * FROM publications WHERE issn='0493-3168' AND flag IS NULL AND wikidata IS NULL";
+
+$sql = "SELECT * FROM publications WHERE url IN('http://xbnyxb.alljournals.cn/ch/reader/view_abstract.aspx?flag=1&file_no=19960108&journal_id=xbnyxb')";
+
+$sql = "SELECT * FROM publications WHERE issn=\"0368-8720\" AND guid like \"https://anales.ib.unam.mx/%\" AND wikidata IS NULL ORDER BY year";
+
+
+//$sql = "SELECT * FROM publications WHERE issn='0070-7279' AND wikidata IS NULL";
 
 $data = do_query($sql);
 

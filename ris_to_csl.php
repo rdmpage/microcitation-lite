@@ -193,7 +193,7 @@ function process_ris_key($key, $value, &$obj)
 			$obj->abstract = $value;			
 			break;
 			
-		case 'T1':
+		//case 'T1':
 		case 'TI':
 		case 'TT':
 			$value = preg_replace('/([^\s])\(/', '$1 (', $value);	
@@ -227,12 +227,15 @@ function process_ris_key($key, $value, &$obj)
 				// store existing title (language detection may be a bit ropey)
 								
 				//$ld = new Language(['en', 'zh']);
-				//$ld = new Language(['en', 'es']);
-				$ld = new Language(['en', 'pt', 'es']);	
+				$ld = new Language(['en', 'es']);
+				//$ld = new Language(['en', 'pt', 'es']);	
+				//$ld = new Language(['en', 'ja']);	
 				$language = $ld->detect($obj->title);
+				
 				if (preg_match('/\p{Han}+/u', $obj->title))
 				{
 					$language = 'zh';
+					//$language = 'ja';
 				}
 				
 				if ($language == 'es')
@@ -267,6 +270,7 @@ function process_ris_key($key, $value, &$obj)
 				if (preg_match('/\p{Han}+/u', $value))
 				{
 					$language = 'zh';
+					//$language = 'ja';
 				}
 				
 				if ($language == 'es')
@@ -468,6 +472,41 @@ function process_ris_key($key, $value, &$obj)
 						);         
 						        
 			   }
+			   
+			   // JSTOR, my code
+			   if (preg_match("/^[0-9]{4}\/\/\/$/", $date))
+			   {                
+					$obj->issued->{'date-parts'}[0] = array(
+							(Integer)$date
+						);         
+			   }
+			   
+			   if (preg_match("/^([0-9]{2})([0-9]{2})-([0-9]{2})\/\/\/$/", $date, $m))
+			   {              
+					$obj->issued->{'date-parts'}[0] = array(
+							(Integer)($m[1] . $m[2])
+						); 
+						
+					$obj->issued->{'date-parts'}[1] = array(
+							(Integer)($m[1] . $m[3])
+						);         
+						        
+			   }
+			   
+			   	
+			   if (preg_match("/^([0-9]{4})-([0-9]{4})\/\/\/$/", $date, $m))
+			   {                
+					$obj->issued->{'date-parts'}[0] = array(
+							(Integer)($m[1])
+						); 
+						
+					$obj->issued->{'date-parts'}[1] = array(
+							(Integer)($m[2])
+						);         
+						        
+			   }
+			   
+			   
 			}
 		   break;		   
 		   
@@ -512,6 +551,11 @@ function process_ris_key($key, $value, &$obj)
 			}
 			
 			if (preg_match('/cnki.net.*\&filename=(?<id>[A-Z]{4}[0-9]{4}[S|Z]?\d+)/', $value, $m))
+			{
+				$obj->CNKI = $m['id'];				
+			}
+
+			if (preg_match('/cnki.net.*\&filename=(?<id>[A-Z]{4}[0-9]{3}\.\d+)/', $value, $m))
 			{
 				$obj->CNKI = $m['id'];				
 			}

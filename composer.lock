@@ -59,16 +59,16 @@
         },
         {
             "name": "renanbr/bibtex-parser",
-            "version": "2.1.2",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/renanbr/bibtex-parser.git",
-                "reference": "7c65a8c64b21a73bb98b1ef5af66f75e1fe36937"
+                "reference": "d02d2426822235f5179ecdf635ba710c9d6d2ddd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/renanbr/bibtex-parser/zipball/7c65a8c64b21a73bb98b1ef5af66f75e1fe36937",
-                "reference": "7c65a8c64b21a73bb98b1ef5af66f75e1fe36937",
+                "url": "https://api.github.com/repos/renanbr/bibtex-parser/zipball/d02d2426822235f5179ecdf635ba710c9d6d2ddd",
+                "reference": "d02d2426822235f5179ecdf635ba710c9d6d2ddd",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +79,8 @@
                 "ryakad/pandoc-php": "^1.0"
             },
             "suggest": {
-                "ryakad/pandoc-php": "Needed to support LaTeX decoder in class RenanBr\\BibTexParser\\Processor\\LatexToUnicodeProcessor"
+                "ryakad/pandoc-php": "Needed to support LaTeX decoder in class RenanBr\\BibTexParser\\Processor\\LatexToUnicodeProcessor",
+                "ueberdosis/pandoc": "Alternate Pandoc PHP package which (if available) will be preferred over ryakad/pandoc-php"
             },
             "type": "library",
             "extra": {
@@ -114,9 +115,9 @@
             ],
             "support": {
                 "issues": "https://github.com/renanbr/bibtex-parser/issues",
-                "source": "https://github.com/renanbr/bibtex-parser/tree/2.1.2"
+                "source": "https://github.com/renanbr/bibtex-parser/tree/2.2.0"
             },
-            "time": "2021-07-27T21:55:34+00:00"
+            "time": "2023-08-25T11:21:46+00:00"
         }
     ],
     "packages-dev": [],
@@ -127,5 +128,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

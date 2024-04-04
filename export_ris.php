@@ -140,6 +140,36 @@ $sql = "SELECT * FROM publications WHERE issn='2581-8686' and year > 1962 and pd
 
 $sql = "SELECT * FROM publications WHERE issn='0753-4973' AND volume IN (3,4)";
 
+// Breviora DOI
+$sql = "SELECT guid, type, title, journal, authors, issn, volume, spage, epage, doi, year, date FROM publications_doi WHERE issn='0006-9698'";
+
+// Breviora no DOI
+$sql = "SELECT * from publications  WHERE issn='0006-9698' and CAST(volume as INTEGER) < 512 and biostor is null order by CAST(volume as INTEGER);";
+
+// 2304-7534
+$sql = "SELECT * from publications  WHERE issn='2304-7534' AND authors IS NOT NULL AND year BETWEEN 1870 AND 1880";
+
+// 0368-8720
+$sql = "SELECT * from publications  WHERE issn='0368-8720' AND pdf LIKE 'https://anales.ib.unam.mx/%'";
+
+// 0368-2935 Journal of the Linnean Society of London, Zoology
+$sql = "SELECT * from publications_doi  WHERE issn='0368-2935' AND volume BETWEEN 11 AND 22 AND spage NOT LIKE 'v%'";
+
+$sql = "SELECT * from publications_doi  WHERE issn='1945-9475' AND volume=8 AND spage NOT LIKE 'v%'";
+
+// BZN
+$sql = "SELECT * from publications_doi  WHERE issn='0007-5167' AND type='journal-article' AND volume IN (73)";
+
+// Ibis
+$sql = "SELECT * from publications_doi  WHERE issn='0019-1019' AND type='journal-article' AND volume = 45 AND spage IS NOT NULL";
+//$sql = "SELECT * FROM publications_doi WHERE guid='10.1111/j.1474-919x.1922.tb01300.x'";
+//$sql = "SELECT * FROM publications_doi WHERE guid='10.1111/j.1474-919x.1922.tb01301.x'";
+
+// Mycotaxon
+
+$sql = "SELECT * from publications_doi  WHERE issn='0093-4666' AND type='journal-article' AND volume IN (115)";
+
+
 $sql .= ' ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED)';
 
 
@@ -212,8 +242,6 @@ foreach ($data as $obj)
 				break;
 		}
 	}
-	
-	//print_r($csl);
 	
 	echo csl_to_ris($csl) . "\n\n";
 }

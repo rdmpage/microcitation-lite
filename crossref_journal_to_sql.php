@@ -208,6 +208,36 @@ $id = 85445;	// Philippine Journal of Systematic Biology
 
 $id = 216386;	// Annales de la Société entomologique de France
 
+$id = 60657;	// Breviora
+
+$id = 421280;	// Vertebrate Zoology
+
+$id = 298840;	// Gardens' Bulletin Singapore
+
+$id = 46100;	// Journal of Molluscan Studies
+
+$id = 85393; // Transactions of the British Mycological Society
+
+$id = 235848; // European Journal of Entomology
+
+$id = 213505; // Therya
+
+$id = 109985; // Journal of the Linnean Society of London, Zoology
+
+$id = 297253; // The Bulletin of zoological nomenclature
+
+$id = 55467; // Taxon
+
+$id = 376658; // Russian Journal of Herpetology
+
+$id = 3798; // Ibis
+
+$id = 546247; // Bulletin de la Société des naturalistes luxembourgeois
+
+$id = 326162; // Proceedings of the Zoological Institute RAS
+
+$id = 195665; // Medical Entomology and Zoology 
+
 $url = 'http://data.crossref.org/depositorreport?pubid=J' . $id;
 
 $text = get($url);
