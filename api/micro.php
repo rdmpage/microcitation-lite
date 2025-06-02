@@ -107,7 +107,7 @@ foreach ($keys as $k)
 
 $sql = 'SELECT * ';
 
-if (0)
+if (1)
 {
 	$sql .= 'FROM publications_doi ';
 }
@@ -156,6 +156,11 @@ else
 		$jstorlike = true;
 	}
 	if (isset($parameters['issn']) && $parameters['issn'] == '1420-2298')
+	{
+		$jstorlike = true;
+	}
+
+	if (isset($parameters['issn']) && $parameters['issn'] == '0815-3191')
 	{
 		$jstorlike = true;
 	}

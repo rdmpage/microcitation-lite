@@ -161,16 +161,197 @@ $sql = "SELECT * from publications_doi  WHERE issn='1945-9475' AND volume=8 AND 
 $sql = "SELECT * from publications_doi  WHERE issn='0007-5167' AND type='journal-article' AND volume IN (73)";
 
 // Ibis
-$sql = "SELECT * from publications_doi  WHERE issn='0019-1019' AND type='journal-article' AND volume = 45 AND spage IS NOT NULL";
+$sql = "SELECT * from publications_doi  WHERE issn='0019-1019' AND type='journal-article' AND volume = 37 AND spage IS NOT NULL";
+
+$sql = "SELECT * from publications_doi  WHERE issn='0019-1019' AND type='journal-article' AND volume IN (19,20,21,22,23) AND spage IS NOT NULL";
+$sql = "SELECT * from publications_doi  WHERE issn='0019-1019' AND type='journal-article' AND volume IN (13,14,15,16,17,18) AND spage IS NOT NULL";
+
+$sql = "SELECT * from publications_doi  WHERE issn='0019-1019' AND type='journal-article' AND volume = 1 AND spage IS NOT NULL";
+
+// The Festivus
+$sql = "SELECT * from publications_doi  WHERE issn='0738-9388' AND type='journal-article' AND spage IS NOT NULL";
+
+
+$sql = 'SELECT * FROM publications WHERE issn="0077-2216" 
+AND guid LIKE "https://biodiversitylibrary.org%" AND NOT volume IN (17,18)';
+
+
+$sql = 'SELECT * FROM publications WHERE issn="1807-0205" AND CAST(volume AS INT) BETWEEN 1 AND 10';
+
+$sql = 'SELECT * FROM publications_doi WHERE issn="1323-5818" and volume in (22,23,24,25)';
+$sql = 'SELECT * FROM publications_doi WHERE issn="1323-5818" and volume in (24) and issue in (2,3)';
+
+
+$sql = 'SELECT * FROM publications WHERE issn="0417-9927" and volume in (1,2,3,4)';
+$sql = 'SELECT * FROM publications WHERE issn="0417-9927" and volume in (3)';
+
+// Madroño
+$sql = 'SELECT * FROM publications_doi WHERE issn="0024-9637" AND type="journal-article"';
+
+$sql = 'SELECT * FROM publications WHERE issn="2190-7307"';
+
+
+//$sql = 'SELECT * FROM publications WHERE issn="1130-4723" and volume in (18,23,24) and handle is null';
+
+//$sql = 'SELECT * FROM publications WHERE oclc=20099493 and volume in (17,18,19,20)';
+
+
 //$sql = "SELECT * FROM publications_doi WHERE guid='10.1111/j.1474-919x.1922.tb01300.x'";
 //$sql = "SELECT * FROM publications_doi WHERE guid='10.1111/j.1474-919x.1922.tb01301.x'";
 
+// Annals of the Missouri Botanical Garden
+//$sql = "SELECT * from publications_doi  WHERE issn='0026-6493' AND type='journal-article' AND volume = 97 AND epage IS NOT NULL";
+
+
+
 // Mycotaxon
+$sql = "SELECT * from publications_doi  WHERE issn='0093-4666' AND type='journal-article' AND volume IN (131,132,133,134,135,136)";
+//$sql = "SELECT * from publications_doi  WHERE issn='0093-4666' AND guid IN ('10.5248/133-4','10.5248/134-4','10.5248/136-3','10.5248/137-1','10.5248/137-3','10.5248/136-4','10.5248/137-2')";
+$sql = "SELECT * from publications_doi  WHERE issn='0093-4666' AND type='journal-article' AND volume IN (109,110,137)";
 
-$sql = "SELECT * from publications_doi  WHERE issn='0093-4666' AND type='journal-article' AND volume IN (115)";
+$sql = "SELECT * from publications_doi  WHERE guid IN ('10.5248/137.629s','10.5248/137.s49','10.5248/137.s99','10.5248/137.s231')";
+
+// Mycotaxon Cybertruffle
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (105,106)";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (103,104)";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (101,102)";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (92,93)";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (85)";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (75,76,77,78,81,82,83)";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume BETWEEN 60 AND 69";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume BETWEEN 50 AND 59";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume BETWEEN 40 AND 49";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume BETWEEN 30 AND 39";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume BETWEEN 20 AND 29";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume BETWEEN 10 AND 19";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (1,2,3,4,5,6,7,8,9)";
+
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (13,19,20,21,27,28,29,43)";
+//$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (73,74,79,80,84,86,87,88,89)";
+//$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (94,95,96,98,99,100)";
+//$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (97)";
+
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (13)";
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (82)";
+
+$sql = "SELECT * from publications  WHERE oclc=3765205";
 
 
-$sql .= ' ORDER BY CAST(volume as SIGNED), CAST(spage AS SIGNED)';
+$sql = "SELECT * from publications  WHERE issn='2454-1095' AND volume IN (113)";
+
+$sql = "SELECT * from publications_doi  WHERE issn='2282-1228' AND volume IN (83,84,85,86,87)";
+$sql = "SELECT * from publications WHERE issn='1110-502X' AND volume IN (1,2)";
+
+// Proceedings of the Zoological Society of London
+$sql = "SELECT * from publications_doi WHERE issn='0370-2774' AND year IN (1911)";
+
+// Halteres
+$sql = "SELECT * from publications_doi WHERE issn='0973-1555' AND volume IN (9)";
+
+// Transactions of the Entomological Society of London
+$sql = "SELECT * from publications_doi WHERE issn='0035-8894' AND year=1923";
+$sql = "SELECT * from publications_doi WHERE issn='0035-8894' AND volume=73";
+
+// Australian Entomologist
+$sql = "SELECT * from publications WHERE issn='1320-6133' AND year=2018";
+
+// Bollettino della Società entomologica italiana
+$sql = "SELECT * from publications_doi WHERE issn='2281-9282' AND volume IN (144,145,146,147)";
+
+$sql = "SELECT * from publications_doi WHERE issn='0973-1555' AND volume IN (8)";
+
+
+$sql = "SELECT * from publications_doi WHERE issn='0038-3872' AND year > 2004";
+
+
+//$sql = "SELECT * from publications_doi WHERE guid='10.1111/j.1365-2311.1923.tb03325.x'";
+
+//$sql = "SELECT * from publications  WHERE issn='2282-1228' AND volume IN (73)";
+
+// broken pages 82
+//$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (82)";
+
+
+
+// American Malacological Bulletin
+//$sql = "SELECT * from publications_doi WHERE issn='0740-2783'";
+
+
+//$sql = "SELECT * from publications_doi WHERE type='journal-article' AND issn='2039-0394'";
+
+
+
+/*
+// Journal of the Bombay Natural History Society
+$sql = "SELECT * from publications  WHERE issn='2454-1095' AND volume IN(108,109)";
+
+*/
+
+/*
+// Salamandra
+//$sql = "SELECT * from publications  WHERE issn='0036-3375' AND CAST(volume AS SIGNED) BETWEEN 57 AND 60 AND pdf IS NOT NULL";
+
+// Amphibian and reptile conservation
+//$sql = "SELECT * from publications WHERE issn='1083-446X' AND volume IN (10,11,12,13,14,15,16,17)";
+
+// Phytologia
+//$sql = "SELECT * from publications WHERE issn='0031-9430' AND CAST(volume AS SIGNED) >= 100";
+
+// Journal of South African Botany
+$sql = "SELECT * from publications WHERE issn='0022-4618' AND volume IN (20)";
+
+//$sql = "SELECT * from publications WHERE guid='https://biodiversitylibrary.org/page/63594144'";
+
+// Malacologia
+$sql = "SELECT * from publications_doi WHERE issn='0076-2997' AND volume IN (54, 55, 56, 57, 58)";
+
+// Madroño
+$sql = "SELECT * from publications_doi WHERE issn='0024-9637' AND volume IN (62,63,64,65,66,67)";
+
+*/
+
+/*
+// Annals and Magazine of Natural History
+$sql = "SELECT * from publications_doi  
+WHERE issn='0374-5481' 
+AND year='1923'
+AND issue IN(61,62,63,64,65,66)";
+*/
+
+// Tasmania
+
+
+//$sql = "SELECT *, year AS volume from publications_doi  
+$sql = "SELECT * from publications_doi  
+WHERE issn='0080-4703' 
+AND year BETWEEN 1974 AND 1975
+AND guid LIKE '10.26749/rstpp%'";
+
+
+
+/*
+// Journal of The Asiatic Society of Bengal
+$sql = "SELECT * from publications
+WHERE issn='0368-1068' AND volume IN ('XXXVIII', 38)";
+*/
+
+// Journal of The Asiatic Society of Bengal
+//$sql = "SELECT * from publications WHERE guid='http://www.southasiaarchive.com/Content/sarf.120250/221525/006'";
+
+// South African journal of natural history
+//$sql = "SELECT * from publications WHERE journal='South African journal of natural history'";
+
+//$sql = "SELECT * from publications WHERE guid='https://biodiversitylibrary.org/page/64330658'";
+
+if (1)
+{
+	$sql .= ' AND spage IS NOT NULL';
+}
+else
+{
+	$sql .= ' AND spage IS NULL';
+}
+$sql .= ' ORDER BY CAST(year as SIGNED), CAST(volume as SIGNED), CAST(issue AS SIGNED), CAST(spage AS SIGNED)';
 
 
 if (0)
@@ -213,6 +394,13 @@ $data = do_query($sql);
 
 foreach ($data as $obj)
 {
+	//print_r($obj);
+	
+	if (isset($obj->authors) && $obj->authors == "Anon.")
+	{
+		unset($obj->authors);
+	}
+
 	$csl = data_to_csl($obj);
 	
 	//print_r($csl);

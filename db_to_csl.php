@@ -115,8 +115,16 @@ function data_to_csl($obj)
 					$csl->ISSN = array();
 				}
 				$csl->ISSN[] = $v;
-				break;				
+				break;		
 				
+			case 'isbn':
+				$csl->ISBN = array($v);
+				break;	
+				
+			case 'publisher':
+				$csl->publisher = $v;
+				break;
+																	
 			case 'doi':
 				$csl->DOI = $v;
 				break;

@@ -11,6 +11,10 @@ $filename = 'jasb.tsv';
 $filename = '/Users/rpage/Desktop/Journals to do/Asiatic Society of Bengal/Journal of the Asiatic Society of Bengal - Sheet1.tsv';
 $filename = '/Users/rpage/Desktop/Journals to do/Asiatic Society of Bengal/Journal and Proceedings of the Asiatic Society of Bengal - Sheet1.tsv';
 
+$filename = '/Users/rpage/Development/ai-article-extractor/x.tsv';
+
+$filename = 'Ruwenzori.tsv';
+
 $headings = array();
 
 $row_count = 0;
@@ -122,6 +126,33 @@ while (!feof($file_handle))
 						$reference->issued->{'date-parts'} = array();
 						$reference->issued->{'date-parts'}[0] = array((Integer)$v);
 						break;
+						
+					case 'date':
+					   // YYYY-MM-DD
+					   if (preg_match("/^(?<year>[0-9]{4})\-[0-9]{2}\-[0-9]{2}$/", $v, $matches))
+					   {
+					   		if (!isset($reference->issued))
+					   		{
+					   			$reference->issued = new stdclass;
+					   		}
+							$reference->issued->{'date-parts'}[0] = explode('-', $v);
+					   }
+					   
+					   // YYYY-MM
+					   if (preg_match("/^([0-9]{4})\-([0-9]{2})$/", $v, $matches))
+					   {                       
+					   		if (!isset($obj->issued))
+					   		{
+					   			$reference->issued = new stdclass;
+					   		}
+							$reference->issued->{'date-parts'}[0] = explode('-', $v);
+							$reference->issued->{'date-parts'}[0] = array(
+								(Integer)$matches[1],
+								(Integer)$matches[2]
+								);             
+					   }
+						break;
+						
 
 					case 'publisher':
 						$reference->$k = $v;

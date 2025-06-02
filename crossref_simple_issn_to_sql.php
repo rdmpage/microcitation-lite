@@ -1,7 +1,5 @@
 <?php
 
-// Import DOIs as SQL via the CrossRef journal id (which you can get from Wikidata)
-
 require_once (dirname(__FILE__) . '/csl_utils.php');
 
 require_once (dirname(__FILE__) . '/HtmlDomParser.php');
@@ -294,12 +292,30 @@ $issns = array(
 
 $issns=array(
 //"1999-4907",
-"0093-4666",
+//"0093-4666",
+"2284-4880"
 );
 
 $start 	= 2022;
-$end 	= 2022;
+$end 	= 2024;
 
+
+
+$issns=array(
+"1323-5818"
+);
+
+$start 	= 2005;
+$end 	= 2005;
+
+$issns = array('1314-4049'); // MycoKeys
+$start 	= 2023;
+$end 	= 2023;
+
+
+$issns = array('0002-8444');
+$start 	= 1968;
+$end 	= 2025;
 
 
 
