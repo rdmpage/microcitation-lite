@@ -89,7 +89,20 @@ function csl_to_ris($csl)
 				break;
 				
 			case 'issued':
-				$ris_values['Y1'][] = $v->{'date-parts'}[0][0];
+				if (count($v->{'date-parts'}[0]) == 1)
+				{			
+					$ris_values['Y1'][] = $v->{'date-parts'}[0][0];
+				}
+				else
+				{
+					$parts = $v->{'date-parts'}[0];
+					if (count($parts) == 2)
+					{
+						$parts[] = '';
+					}
+					$parts[] = '';
+					$ris_values['PY'][] = join("/", $parts);
+				}
 				break;
 				
 			case 'ISSN':
@@ -469,6 +482,15 @@ function csl_to_sql($csl, $table = "publications")
 			$guid = $csl->HANDLE;
 		}
 	}	
+	
+	if ($guid == '')
+	{
+		if (isset($csl->JSTOR))
+		{
+			$guid = 'https://www.jstor.org/stable/' . $csl->JSTOR;
+		}
+	}	
+	
 		
 	if ($guid == '')
 	{
@@ -529,10 +551,38 @@ function csl_to_sql($csl, $table = "publications")
 				$keys[] ='jstor';
 				$values[] = '"' . $v . '"';	
 				break;		
+				
+			case 'URN':
+				$keys[] ='alternative_id';
+				$values[] = '"' . $v . '"';	
+				break;						
+
+			case 'WORMS':
+				$keys[] ='worms';
+				$values[] = '"' . $v . '"';	
+				break;		
 
 			case 'URL':
-				$keys[] ='url';
-				$values[] = '"' . $v . '"';	
+				// check we don't have a potentially more useful link
+				$use_url = true;
+				if (isset($csl->resource))
+				{
+					if (isset($csl->resource->primary))
+					{
+						if (isset($csl->resource->primary->URL))
+						{
+							$keys[] ='url';
+							$values[] = '"' . $csl->resource->primary->URL . '"';	
+							$use_url = false;
+						}
+					}
+				}
+			
+				if ($use_url)
+				{
+					$keys[] ='url';
+					$values[] = '"' . $v . '"';	
+				}
 				break;		
 				
 			case 'doi_agency':	
@@ -585,11 +635,40 @@ function csl_to_sql($csl, $table = "publications")
 				// clean
 				$title = preg_replace('/\R/u', ' ', $title);
 				$title = preg_replace('/\s\s+/u', ' ', $title);
+				$title = html_entity_decode($title);
 				
 				if ($title != '')
 				{
 					$keys[] = 'title';
 					$values[] = '"' . str_replace('"', '""', $title) . '"';	
+				}
+				else
+				{
+					// empty title, CrossRef might have it in original-title
+					
+					if (isset($csl->{'original-title'}))
+					{
+						$title = $csl->{'original-title'};
+						if (is_array($csl->{'original-title'}))
+						{
+							if (count($csl->{'original-title'}) > 0)
+							{
+								$title = $csl->{'original-title'}[0];
+							}
+							else
+							{
+								$title = '';
+							}
+						}
+						
+						if ($title != '')
+						{
+							$keys[] = 'title';
+							$values[] = '"' . str_replace('"', '""', $title) . '"';	
+						}
+						
+					}
+				
 				}
 				break;
 				
@@ -651,12 +730,28 @@ function csl_to_sql($csl, $table = "publications")
 				
 			case 'ISBN':
 				$keys[] ='isbn';
-				$values[] = '"' . $v[0] . '"';	
+				
+				if (is_array($v))
+				{				
+					$values[] = '"' . $v[0] . '"';	
+				}
+				else
+				{
+					$values[] = '"' . $v . '"';	
+				}
 				break;										
 	
 			case 'issued':
 				$keys[] = 'year';
-				$values[] = '"' . $v->{'date-parts'}[0][0] . '"';		
+				
+				if (count($v->{'date-parts'}) == 2)
+				{
+					$values[] = '"' . $v->{'date-parts'}[0][0] . '-' . $v->{'date-parts'}[1][0] . '"';	
+				}
+				else
+				{
+					$values[] = '"' . $v->{'date-parts'}[0][0] . '"';		
+				}
 				
 				//print_r($v->{'date-parts'})
 				
@@ -694,13 +789,53 @@ function csl_to_sql($csl, $table = "publications")
 
 					$keys[] = 'epage';
 					$values[] = '"' . $m['epage'] . '"';					
-
 				}
 				else
 				{
-					$keys[] = 'spage';
-					$values[] = '"' . $v . '"';					
+					// roman numerals
+					if (preg_match('/(?<spage>[ivxlc]+)-(?<epage>[ivxlc]+)/i', $v, $m)) 
+					{
+						$keys[] = 'spage';
+						$values[] = '"' . $m['spage'] . '"';					
+
+						$keys[] = 'epage';
+						$values[] = '"' . $m['epage'] . '"';					
+
+					}
+					elseif (preg_match('/(?<spage>[A-Z]+\d+)-(?<epage>[A-Z]+\d+)/i', $v, $m)) 
+					{
+						$keys[] = 'spage';
+						$values[] = '"' . $m['spage'] . '"';					
+
+						$keys[] = 'epage';
+						$values[] = '"' . $m['epage'] . '"';					
+
+					}
+					// roman then arabic
+					if (preg_match('/(?<spage>[ivxlc]+)-(?<epage>\d+)/i', $v, $m)) 
+					{
+						$keys[] = 'spage';
+						$values[] = '"' . $m['spage'] . '"';					
+
+						$keys[] = 'epage';
+						$values[] = '"' . $m['epage'] . '"';					
+
+					}
+					
+					else
+					{
+						$keys[] = 'spage';
+						$values[] = '"' . $v . '"';
+					}
 		
+				}
+				break;
+				
+			case 'page-first':
+				if (!isset($csl->page))
+				{
+					$keys[] = 'spage';
+					$values[] = '"' . $v . '"';				
 				}
 				break;
 			
@@ -758,9 +893,7 @@ function csl_to_sql($csl, $table = "publications")
 					{					
 						$keys[] = 'xml';
 						$values[] = '"' . $link->URL . '"';							
-					}
-					
-					
+					}										
 				}					
 				break;
 				
@@ -800,7 +933,7 @@ function csl_to_sql($csl, $table = "publications")
 	$sql = '';
 	
 	
-	if (0)
+	if (1)
 	{	
 		$sql = 'REPLACE INTO ' . $table . '(' . join(',', $keys) . ') VALUES (' . join(',', $values) . ');' . "\n";
 	}

@@ -188,6 +188,11 @@ $sql = "SELECT * FROM publications WHERE url IN('http://xbnyxb.alljournals.cn/ch
 
 $sql = "SELECT * FROM publications WHERE issn=\"0368-8720\" AND guid like \"https://anales.ib.unam.mx/%\" AND wikidata IS NULL ORDER BY year";
 
+$sql = "SELECT * FROM publications WHERE issn='0970-0714'; //  AND volume IN (57,58,59,60) AND wikidata IS NULL";
+
+$sql = "SELECT * FROM publications WHERE issn='2373-7697'";
+
+$sql = "SELECT * FROM publications WHERE issn='0438-380X' AND spage IS NOT NULL and spage != 0";
 
 //$sql = "SELECT * FROM publications WHERE issn='0070-7279' AND wikidata IS NULL";
 

@@ -13,6 +13,27 @@ SELECT guid, title, volume, year, spage, epage, doi FROM publications WKERE issn
 
 */
 
+/*
+multilingual sql
+
+-- wanfang
+SELECT guid, value AS title, year, issue, spage, epage FROM multilingual
+INNER JOIN `publications` USING(guid)
+WHERE multilingual.language = "zh" 
+AND `publications`.issn IN ("0001-7302") AND url LIKE "https://wf.pub/perios/article:%"
+AND year=1998 and key = 'title';
+
+
+-- cnki
+SELECT guid, key, value AS title, year, issue, spage, epage FROM multilingual
+INNER JOIN `publications` USING(guid)
+WHERE multilingual.language = "zh" 
+AND `publications`.issn IN ("0001-7302") AND guid LIKE "https://oversea.cnki.net%"
+AND year=1998 and key = 'title';
+
+
+*/
+
 
 require_once(dirname(__FILE__) . '/compare.php');
 
@@ -341,6 +362,12 @@ foreach ($one as $year => $articles)
 						{
 							echo 'UPDATE rdmp_reference SET doi="' . $k1[$i]->doi . '" WHERE reference_id="' . $k2[$j]->guid . '";' . "\n";
 						}
+
+						if (isset($k2[$j]->cnki))
+						{
+							echo 'UPDATE publications SET alternative_id="' . $k2[$j]->cnki . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+						}
+
 						
 					}
 				
@@ -369,6 +396,55 @@ foreach ($one as $year => $articles)
 					}
 				
 				}	
+				
+				if (0)
+				{
+					// two.tsv has Wikidata
+				
+					//print_r($k1[$i]);
+					//print_r($k2[$j]);
+				
+				
+					$go = true;
+					
+					// sanity check
+					if ($go)
+					{
+						$go = $k1[$i]->volume == $k2[$j]->volume;
+					}					
+					
+					if ($go)
+					{
+						if (isset($k2[$j]->wikidata))
+						{
+							echo 'UPDATE publications SET wikidata="' . $k2[$j]->wikidata . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+						}						
+					}
+				
+				}	
+				
+				if (0)
+				{
+					// one.tsv is CrossRef, two.csv is BHL
+				
+					print_r($k1[$i]);
+					print_r($k2[$j]);
+				
+				
+					$go = true;
+					
+					
+					if ($go)
+					{
+						if (isset($k2[$j]->wikidata))
+						{
+							//echo 'UPDATE publications SET wikidata="' . $k2[$j]->wikidata . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+						}						
+					}
+				
+				}	
+				
+				
 				
 				// CNKI and not CNKI	
 				if (0)
@@ -402,8 +478,6 @@ foreach ($one as $year => $articles)
 						unset($k1_list[$i]);
 						unset($k2_list[$j]);
 					
-					
-					
 						echo "-- go\n";
 						
 						/*
@@ -425,10 +499,18 @@ foreach ($one as $year => $articles)
 						}
 						*/
 						
+						/*
 						if (isset($k1[$i]->doi) && !isset($k2[$j]->doi))
 						{
 							echo 'UPDATE rdmp_reference SET doi="' . $k1[$i]->doi . '" WHERE reference_id="' . $k2[$j]->guid . '";' . "\n";
 						}
+						*/
+						
+						if (isset($k2[$j]->cnki))
+						{
+							echo 'UPDATE publications SET alternative_id="' . $k2[$j]->cnki . '" WHERE guid="' . $k1[$i]->guid . '";' . "\n";
+						}
+							
 						
 						
 					}
@@ -437,7 +519,7 @@ foreach ($one as $year => $articles)
 				
 				
 				// BHL DOIs and non BHL DOIs	
-				if (1)
+				if (0)
 				{
 					//print_r($k1[$i]);
 					//print_r($k2[$j]);

@@ -99,6 +99,7 @@ foreach ($data as $obj)
 
 }
 
+header ("Content-type: application/json");
 echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n";
 
 ?>

@@ -148,8 +148,12 @@ function process_ris_key($key, $value, &$obj)
 		case 'JF':
 		case 'JO':
 		case 'T2':
-			$value = mb_convert_case($value, 
-				MB_CASE_TITLE, mb_detect_encoding($value));
+		case 'BT':
+			if (0)
+			{
+				$value = mb_convert_case($value, 
+					MB_CASE_TITLE, mb_detect_encoding($value));
+			}
 				
 			$value = preg_replace('/ Of /', ' of ', $value);	
 			$value = preg_replace('/ the /', ' the ', $value);	
@@ -193,7 +197,7 @@ function process_ris_key($key, $value, &$obj)
 			$obj->abstract = $value;			
 			break;
 			
-		//case 'T1':
+		case 'T1':
 		case 'TI':
 		case 'TT':
 			$value = preg_replace('/([^\s])\(/', '$1 (', $value);	
@@ -225,11 +229,17 @@ function process_ris_key($key, $value, &$obj)
 				}
 				
 				// store existing title (language detection may be a bit ropey)
+				
+				$language = 'en';
 								
-				//$ld = new Language(['en', 'zh']);
-				$ld = new Language(['en', 'es']);
+				$ld = new Language(['en', 'zh']);
+				//$ld = new Language(['en', 'es']);
 				//$ld = new Language(['en', 'pt', 'es']);	
 				//$ld = new Language(['en', 'ja']);	
+				
+				//$ld = new Language(['en', 'hu', 'de']);	
+				$//ld = new Language(['en', 'fr']);
+				
 				$language = $ld->detect($obj->title);
 				
 				if (preg_match('/\p{Han}+/u', $obj->title))
@@ -270,7 +280,7 @@ function process_ris_key($key, $value, &$obj)
 				if (preg_match('/\p{Han}+/u', $value))
 				{
 					$language = 'zh';
-					//$language = 'ja';
+					$language = 'ja';
 				}
 				
 				if ($language == 'es')
@@ -357,8 +367,12 @@ function process_ris_key($key, $value, &$obj)
 			{
 				$obj->page 	= $value;
 			}
+			
+			// clean
+			$obj->page = preg_replace('/\.$/', '', $obj->page);
 			break;
 			
+		case 'DA': 
 		case 'PY': // used by Ingenta, and others
 			if (!isset($obj->issued))
 			{		
@@ -381,6 +395,7 @@ function process_ris_key($key, $value, &$obj)
 		   			);             
 		   }
 		   
+		   // YYYY/MM/DD
 		   if (preg_match("/(?<year>[0-9]{4})\/(?<month>[0-9]{1,2})\/(?<day>[0-9]{1,2})/", $date, $matches))
 		   {   
 		   		$obj->issued->{'date-parts'}[0] = array(
@@ -390,14 +405,16 @@ function process_ris_key($key, $value, &$obj)
 		   			);             
 		   }		   
 
+		   // YYYY/MM//?
 		   if (preg_match("/^(?<year>[0-9]{4})\/(?<month>[0-9]{1,2})\/(\/)?$/", $date, $matches))
 		   {                       
-		   		$$obj->issued->{'date-parts'}[0] = array(
+		   		$obj->issued->{'date-parts'}[0] = array(
 		   			(Integer)$matches['year'],
 		   			(Integer)$matches['month']
 		   			);             
 		   }
 
+			// YYYY/MM
 		   if (preg_match("/^(?<year>[0-9]{4})\/(?<month>[0-9]{1,2})$/", $date, $matches))
 		   {                       
 		   		$obj->issued->{'date-parts'}[0] = array(
@@ -406,6 +423,7 @@ function process_ris_key($key, $value, &$obj)
 		   			);             
 		   }
 
+			// YYYY///
 		   if (preg_match("/[0-9]{4}\/\/\//", $date))
 		   {                       
 			   $year = trim(preg_replace("/\/\/\//", "", $date));
@@ -417,6 +435,7 @@ function process_ris_key($key, $value, &$obj)
 			   }
 		   }
 
+			// YYYY
 		   if (preg_match("/^[0-9]{4}$/", $date))
 		   {                
 		   		$obj->issued->{'date-parts'}[0] = array(
@@ -424,14 +443,24 @@ function process_ris_key($key, $value, &$obj)
 		   			);         
 		   }		   
 		   
+		   // YYYY-MM-DD
 		   if (preg_match("/^(?<year>[0-9]{4})\-[0-9]{2}\-[0-9]{2}$/", $date, $matches))
 		   {
 		   		$obj->issued->{'date-parts'}[0] = explode('-', $date);
 		   }
 		   
+		   // YYYY-MM
+		   if (preg_match("/^([0-9]{4})\-([0-9]{2})$/", $date, $matches))
+		   {                       
+		   		$obj->issued->{'date-parts'}[0] = array(
+		   			(Integer)$matches[1],
+		   			(Integer)$matches[2]
+		   			);             
+		   }
 		   break;
 		   
 		case 'Y1':
+		case 'Y2':
 			if (!isset($obj->issued))
 			{		
 				$obj->issued = new stdclass;			
@@ -458,10 +487,22 @@ function process_ris_key($key, $value, &$obj)
 						);         
 						        
 			   }
-			   
-			   
+			   			   
 			   // e.g. 1975-1976		   
 			   if (preg_match("/^([0-9]{4})-([0-9]{4})$/", $date, $m))
+			   {                
+					$obj->issued->{'date-parts'}[0] = array(
+							(Integer)($m[1])
+						); 
+						
+					$obj->issued->{'date-parts'}[1] = array(
+							(Integer)($m[2])
+						);         
+						        
+			   }
+
+			   // e.g. 1975/1976		   
+			   if (preg_match("/^([0-9]{4})\/([0-9]{4})$/", $date, $m))
 			   {                
 					$obj->issued->{'date-parts'}[0] = array(
 							(Integer)($m[1])
@@ -489,10 +530,8 @@ function process_ris_key($key, $value, &$obj)
 						
 					$obj->issued->{'date-parts'}[1] = array(
 							(Integer)($m[1] . $m[3])
-						);         
-						        
-			   }
-			   
+						);         						        
+			   }			   
 			   	
 			   if (preg_match("/^([0-9]{4})-([0-9]{4})\/\/\/$/", $date, $m))
 			   {                
@@ -502,11 +541,17 @@ function process_ris_key($key, $value, &$obj)
 						
 					$obj->issued->{'date-parts'}[1] = array(
 							(Integer)($m[2])
-						);         
-						        
+						);         						        
 			   }
-			   
-			   
+				   
+			   // Shouldn't happen by ChatGPT sometimes does this
+			   // YYYY/MM/DD
+			   if (preg_match("/^(?<year>[0-9]{4})\/[0-9]{2}\/[0-9]{2}[\/]?$/", $date))
+			   {
+					$obj->issued->{'date-parts'}[0] = explode('/', $date);
+			   }
+			   			   
+			  
 			}
 		   break;		   
 		   
@@ -535,6 +580,8 @@ function process_ris_key($key, $value, &$obj)
 			break;
 
 		case 'UR':
+			$skip = false;
+		
 			if (preg_match('/https?:\/\/hdl.handle.net\/(?<id>.*)/', $value, $m))
 			{
 				$obj->HANDLE = $m['id'];				
@@ -559,14 +606,40 @@ function process_ris_key($key, $value, &$obj)
 			{
 				$obj->CNKI = $m['id'];				
 			}
-			
-			
-			$obj->URL = $value;			
+
+			if (preg_match('/aphia.php\?p=sourcedetails&id=(?<id>\d+)/', $value, $m))
+			{
+				$obj->WORMS = (Integer)$m['id'];				
+			}		
+
+			if (preg_match('/nbn-resolving.org\/(?<id>urn:nbn.*)/', $value, $m))
+			{
+				$obj->URN = $m['id'];	
+				$skip = true;			
+			}		
+
+			if (!$skip)
+			{
+				$obj->URL = $value;
+			}
 			break;			
 
 		case 'ID':
 			$obj->id = $value;
-			break;			
+			
+			if (preg_match('/https?:\/\/www.jstor.org\/stable\/(?<id>.*)/', $value, $m))
+			{
+				$obj->JSTOR = $m['id'];				
+			}
+			
+			break;	
+			
+		case 'T3':
+			if (preg_match('/IDF-Report.*\s+-\s+(\d+)/', $value, $m))
+			{
+				$obj->volume = $m[1];
+			}
+			break;
 			
 		default:
 			break;
