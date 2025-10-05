@@ -362,6 +362,22 @@ $id =   476223; // SHILAP
 $id =    70538; // Bulletin Southern California Academy of Sciences
 
 
+$id =   185265; // "Revista Mexicana de Biodiversidad","185265"
+
+$id =     82668;
+$id =    315146;
+
+$id =    306959;
+$id =     97765;
+$id =    302061;
+$id =    836805;
+
+$id =    31997;
+$id =   254188;
+$id =   308400;
+$id =   223387;
+
+
 $url = 'http://data.crossref.org/depositorreport?pubid=J' . $id;
 
 $text = get($url);

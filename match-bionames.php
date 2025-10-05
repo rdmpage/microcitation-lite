@@ -20,6 +20,7 @@ guid	title	volume	year	spage	epage	doi
 SELECT guid, title, volume, year, spage, epage, doi FROM publications WHERE issn="XXXX-XXXX";
 
 
+## Specific journals
 
 Bonn
 
@@ -136,10 +137,11 @@ function get_data($filename)
 $one = get_data('bionames.tsv'); // references from BioNames
 $two = get_data('micro.tsv'); // references from microcitation
 
-//print_r($one);
-//print_r($two);
-
+print_r($one);
 //exit();
+print_r($two);
+
+
 
 // compare
 
@@ -164,7 +166,7 @@ foreach ($one as $year => $articles)
 
 		foreach ($one[$year] as $o1)
 		{
-			//echo $o1->title . "\n";
+			echo "-- " . $o1->title . "\n";
 			$k1[] = $o1;
 		}
 
@@ -172,7 +174,7 @@ foreach ($one as $year => $articles)
 
 		foreach ($two[$year] as $o2)
 		{
-			// echo $o2->title . "\n";
+			echo "-- " . $o2->title . "\n";
 			
 			// hacks
 			$o2->title = str_replace('書評 ', '', $o2->title);
@@ -246,12 +248,14 @@ foreach ($one as $year => $articles)
 				
 				if (1)
 				{
+					
 					// BioNames
 					if (isset($k2[$j]->doi))
 					{
 						echo 'UPDATE names SET doi="' . $k2[$j]->doi . '" WHERE sici="' . $k1[$i]->guid . '";' . "\n";
 					}	
 					
+					/*
 					if (isset($k2[$j]->url))
 					{
 						echo 'UPDATE names SET url="' . $k2[$j]->url . '" WHERE sici="' . $k1[$i]->guid . '";' . "\n";
@@ -260,7 +264,21 @@ foreach ($one as $year => $articles)
 					if (isset($k2[$j]->pdf))
 					{
 						echo 'UPDATE names SET pdf="' . $k2[$j]->pdf . '" WHERE sici="' . $k1[$i]->guid . '";' . "\n";
-					}				
+					}	
+					*/
+					
+					/*
+					if (isset($k2[$j]->guid))
+					{
+						echo 'UPDATE names SET url="' . $k2[$j]->guid . '" WHERE sici="' . $k1[$i]->guid . '";' . "\n";
+						
+						if (preg_match('/dbcode=CJFD&filename=(.*)/', $k2[$j]->guid, $matches))
+						{
+							echo 'UPDATE names SET cnki="' . $matches[1] . '" WHERE sici="' . $k1[$i]->guid . '";' . "\n";
+						}
+					}	
+					*/			
+								
 								
 				}
 			}

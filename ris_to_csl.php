@@ -178,6 +178,10 @@ function process_ris_key($key, $value, &$obj)
 			{
 				$obj->ISBN = $value;
 			}
+			elseif ($obj->type == 'chapter')
+			{
+				$obj->ISBN = $value;
+			}
 			else
 			{
 				$obj->ISSN = array();
@@ -592,6 +596,14 @@ function process_ris_key($key, $value, &$obj)
 				$obj->HANDLE = $m['id'];				
 			}
 
+			if (preg_match('/https?:\/\/digital.csic.es\/handle\/(?<id>.*)/', $value, $m))
+			{
+				$obj->HANDLE = $m['id'];				
+			}
+			
+			
+			
+
 			if (preg_match('/https?:\/\/www.jstor.org\/stable\/(?<id>.*)/', $value, $m))
 			{
 				$obj->JSTOR = $m['id'];				
@@ -684,6 +696,10 @@ function import_ris($ris, $callback_func = '')
 			{
 				$obj->type = 'book';
 			}
+			if ('CHAP' == $value)
+			{
+				$obj->type = 'chapter';
+			}			
 			if ('ABST' == $value)
 			{
 				$obj->type = 'article-journal';
@@ -768,6 +784,10 @@ function import_ris_file($filename, $callback_func = '')
 			if ('BOOK' == $value)
 			{
 				$obj->type = 'book';
+			}
+			if ('CHAP' == $value)
+			{
+				$obj->type = 'chapter';
 			}
 			if ('THES' == $value)
 			{

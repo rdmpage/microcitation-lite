@@ -324,10 +324,26 @@ AND issue IN(61,62,63,64,65,66)";
 //$sql = "SELECT *, year AS volume from publications_doi  
 $sql = "SELECT * from publications_doi  
 WHERE issn='0080-4703' 
-AND year BETWEEN 1974 AND 1975
+AND year IN (1970,1971,1999)
 AND guid LIKE '10.26749/rstpp%'";
 
+/*
+$sql = "SELECT * from publications  
+WHERE oclc=2446377
+AND volume IN(1,2,3,4,5,6,7,8,9,10)";
 
+
+//$sql = "SELECT * from publications WHERE `publications`.isbn IN ('9781928224112','9781928224129')";
+
+$sql = "SELECT * from publications_doi  
+WHERE issn='0035-8894' AND volume=72";
+
+// Halteres
+$sql = "SELECT * from publications_doi WHERE issn='0973-1555' AND volume IN (10)";
+
+// Australian Entomologist
+$sql = "SELECT * from publications WHERE issn='1320-6133' AND volume in (45)";
+*/
 
 /*
 // Journal of The Asiatic Society of Bengal
@@ -343,6 +359,23 @@ WHERE issn='0368-1068' AND volume IN ('XXXVIII', 38)";
 
 //$sql = "SELECT * from publications WHERE guid='https://biodiversitylibrary.org/page/64330658'";
 
+$sql = "SELECT * from publications  WHERE issn='0093-4666' AND volume IN (35, 90,91)";
+
+$sql = "SELECT * from publications_doi  WHERE issn='0374-7859' AND volume=70 and doi LIKE '%suppl.1%'";
+
+$sql = "SELECT * from publications  WHERE issn='1713-7845' AND guid LIKE 'https://biodiversitylibrary.org/page/%'";
+
+$sql = "SELECT * from publications  WHERE oclc=595848";
+
+
+$sql = "SELECT * from publications_doi  WHERE issn='2281-9282'";
+
+$sql = "SELECT * from publications  WHERE issn='2168-6351' AND volume In (96,97)";
+
+$sql = "SELECT * from publications  WHERE issn='0523-7904'";
+
+$sql = "SELECT * from publications  WHERE issn='0367-5734' AND year IN (1920, 1921)";
+
 if (1)
 {
 	$sql .= ' AND spage IS NOT NULL';
@@ -351,7 +384,20 @@ else
 {
 	$sql .= ' AND spage IS NULL';
 }
-$sql .= ' ORDER BY CAST(year as SIGNED), CAST(volume as SIGNED), CAST(issue AS SIGNED), CAST(spage AS SIGNED)';
+
+
+if (1)
+{
+	$sql .= ' ORDER BY journal, CAST(year as SIGNED), CAST(volume as SIGNED), CAST(issue AS SIGNED), CAST(spage AS SIGNED)';
+}
+else
+{
+	$sql .= ' ORDER BY CAST(year as SIGNED), CAST(volume as SIGNED), CAST(issue AS SIGNED), CAST(spage AS SIGNED)';
+}
+
+
+//$sql = "SELECT * from publications WHERE issn='1026-5023' AND internetarchive IS NULL ORDER BY CAST(year as SIGNED), CAST(volume as SIGNED), CAST(issue AS SIGNED), CAST(spage AS SIGNED)";
+
 
 
 if (0)
@@ -399,6 +445,20 @@ foreach ($data as $obj)
 	if (isset($obj->authors) && $obj->authors == "Anon.")
 	{
 		unset($obj->authors);
+	}
+	
+	if (isset($obj->issn))
+	{
+		if ($obj->issn == '2168-6351')
+		{
+			$obj->issn = '0037-9271';
+			if (preg_match('/www.tandfonline.com\/doi\/abs\/(.*)/', $obj->url, $m))
+			{
+				$obj->doi = $m[1];
+			}
+		}
+		
+	
 	}
 
 	$csl = data_to_csl($obj);

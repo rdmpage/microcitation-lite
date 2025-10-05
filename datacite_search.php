@@ -73,6 +73,11 @@ $issn = '2643-4806';
 $publisher = "Senckenberg Gesellschaft für Naturforschung";
 $issn = '';
 
+$publisher = "Landcare Research NZ Ltd";
+$issn = '';
+
+$issn = '2262-3094';
+
 $done = false;
 $page_number = 1;
 $page_size = 1000;

@@ -467,6 +467,7 @@ function csl_to_sql($csl, $table = "publications")
 	
 	$guid = '';
 	
+	
 	if ($guid == '')
 	{
 		if (isset($csl->DOI))

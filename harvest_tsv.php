@@ -15,6 +15,9 @@ $filename = '/Users/rpage/Development/ai-article-extractor/x.tsv';
 
 $filename = 'Ruwenzori.tsv';
 
+$filename = '/Users/rpage/Development/ai-article-extractor/afrotropicaldiptera.tsv';
+
+
 $headings = array();
 
 $row_count = 0;
